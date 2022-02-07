@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Donasi</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Faktur Penjualan</li>
+                <li class="breadcrumb-item active" aria-current="page">Faktur Donasi</li>
             </ol>
         </nav>
         <h4 class="content-title">Input Item - Faktur Donasi</h4>

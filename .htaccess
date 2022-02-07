@@ -167,6 +167,12 @@
     RewriteRule ^transferstok/v/(.*)$ sistem.php?menu=vtransferstok&keycode=$1 [L]
     RewriteRule ^rtransferstok$ sistem.php?menu=rtransferstok [L]
     RewriteRule ^rtransferstok/cari=(.*)$ sistem.php?menu=rtransferstok&cari=$1 [L]
+    RewriteRule ^fdonasi$ sistem.php?menu=fdonasi [L]
+    RewriteRule ^fdonasi/cari=(.*)$ sistem.php?menu=fdonasi&cari=$1 [L]
+    RewriteRule ^fdonasi/i$ sistem.php?menu=ifdonasi [L]
+    RewriteRule ^itemdonasi/(.*)$ sistem.php?menu=itemdonasi&keycode=$1 [L]
+    RewriteRule ^fdonasi/e/(.*)$ sistem.php?menu=efdonasi&keycode=$1 [L]
+    RewriteRule ^fdonasi/v/(.*)$ sistem.php?menu=vfdonasi&keycode=$1 [L]
 
 	ErrorDocument 404 http://localhost/erp/error.php
 	RewriteCond %{QUERY_STRING} .
