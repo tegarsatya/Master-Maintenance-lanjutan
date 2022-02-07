@@ -51,6 +51,8 @@
                     <th>Nomor Faktur</th>
                     <th><center>Tgl. Faktur</center></th>
                     <th>Nama Barang</th>
+                    <th>Kategori Obat</th>
+                    <th>Kode Produk Jadi</th>
                     <th>Kode Barang</th>
                     <th>No. Batch</th>
                     <th><center>Exp. Date</center></th>
@@ -66,7 +68,7 @@
             <tbody>
             <?php
 				$nomor	= 1;
-				$master	= $conn->prepare("SELECT A.bcode_trd, A.tbcode_trd, A.jumlah_trd, A.harga_trd, A.diskon_trd, A.total_trd, B.fak_tre, B.tglfak_tre, B.tgl_limit, B.status_tre, TIMESTAMPDIFF(DAY, B.tgl_limit, :tanggal) AS jarak, C.tgl_tor, C.kode_tor, D.nama_pro, D.kode_pro, F.nama_sup FROM transaksi_receivedetail AS A INNER JOIN transaksi_receive AS B ON A.id_tre=B.id_tre LEFT JOIN transaksi_order AS C ON B.id_tor=C.id_tor LEFT JOIN produk AS D ON A.id_pro=D.id_pro LEFT JOIN supplier AS F ON B.id_sup=F.id_sup WHERE A.id_trd!='' $supp $produk $tgl1 $tgl2 ORDER BY B.tgl_tre DESC, A.created_at DESC");
+				$master	= $conn->prepare("SELECT A.bcode_trd, A.tbcode_trd, A.jumlah_trd, A.harga_trd, A.diskon_trd, A.total_trd, B.fak_tre, B.tglfak_tre, B.tgl_limit, B.status_tre, TIMESTAMPDIFF(DAY, B.tgl_limit, :tanggal) AS jarak, C.tgl_tor, C.kode_tor, D.nama_pro, D.kategori_obat, D.kode_produk_jadi, D.kode_pro,F.nama_sup FROM transaksi_receivedetail AS A INNER JOIN transaksi_receive AS B ON A.id_tre=B.id_tre LEFT JOIN transaksi_order AS C ON B.id_tor=C.id_tor LEFT JOIN produk AS D ON A.id_pro=D.id_pro LEFT JOIN supplier AS F ON B.id_sup=F.id_sup WHERE A.id_trd!='' $supp $produk $tgl1 $tgl2 ORDER BY B.tgl_tre DESC, A.created_at DESC");
 				$master->bindParam(':tanggal', $tanggal, PDO::PARAM_STR);
 				$master->execute();
 				while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
@@ -80,6 +82,8 @@
                     <td><?php echo($hasil['fak_tre']); ?></td>
                     <td><center><?php echo($hasil['tglfak_tre']); ?></center></td>
                     <td><?php echo($hasil['nama_pro']); ?></td>
+                    <td><?php echo($hasil['kategori_obat']); ?></td>
+                    <td><?php echo($hasil['kode_produk_jadi']); ?></td>
                     <td><?php echo($hasil['kode_pro']); ?></td>
                     <td><?php echo($hasil['bcode_trd']); ?></td>
                     <td><?php echo($hasil['tbcode_trd']); ?></td>
