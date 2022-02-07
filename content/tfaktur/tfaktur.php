@@ -31,9 +31,9 @@
                 <tr>
                     <th><center>#</center></th>
                     <th>No. Faktur</th>
-                    <th>Outlet</th>
+                    <th>Nama Outlet</th>
                     <th>Tanggal faktur</th>
-                    <th>Jatuh Tempo</th>
+                    <!-- <th>Jatuh Tempo</th> -->
                     <th>Tanggal Tuker Faktur</th>
                     <th>Status</th>
                     <th><center>Aksi</center></th>

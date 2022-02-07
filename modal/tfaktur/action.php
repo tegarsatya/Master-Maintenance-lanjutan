@@ -18,21 +18,17 @@
 		switch($menu){
 			case "input":
 				// Api Post
-				$id						= '';
-				$kode					= $data->basecode('TKF', 5, 'id_tkf_t', 'tuker_faktur');
-				$kodetukerfaktur		= $secu->injection($_POST['kodetukerfaktur']);
-				$namaoutlet				= $secu->injection($_POST['namaoutlet']);
-				$tglfaktur				= $secu->injection($_POST['tglfaktur']);
-				$tgltempo				= $secu->injection($_POST['tgltempo']);
-				$tanggal_tkf			= $secu->injection($_POST['tanggal_tkf']);
-				$status					= $secu->injection($_POST['status']);
+				$id				= '';
+				$kode			= $data->basecode('TKF', 5, 'id_tkf_t', 'tuker_faktur');
+				$id_kot			= $secu->injection($_POST['id_kot']);
+				$id_tfk			= $secu->injection($_POST['id_tfk']);
+				$tanggal_tkf	= $secu->injection($_POST['tanggal_tkf']);
+				$status			= $secu->injection($_POST['status']);
 				// save data ke database
-				$save			= $conn->prepare("INSERT INTO tuker_faktur VALUES(:kode, :kodetukerfaktur, :namaoutlet, :tglfaktur, :tgltempo, :tanggal_tkf, :status,  :catat, :admin, :catat, :admin)");
+				$save			= $conn->prepare("INSERT INTO tuker_faktur VALUES(:kode,:id_kot, :id_tfk,  :tanggal_tkf, :status,  :catat, :admin, :catat, :admin)");
 				$save->bindParam(":kode", $kode, PDO::PARAM_STR);
-				$save->bindParam(":kodetukerfaktur", $kodetukerfaktur, PDO::PARAM_STR);
-				$save->bindParam(":namaoutlet", $namaoutlet, PDO::PARAM_STR);
-				$save->bindParam(":tglfaktur", $tglfaktur, PDO::PARAM_STR);
-				$save->bindParam(":tgltempo", $tgltempo, PDO::PARAM_STR);
+				$save->bindParam(":id_kot", $id_kot, PDO::PARAM_STR);
+				$save->bindParam(":id_tfk", $id_tfk, PDO::PARAM_STR);
 				$save->bindParam(":tanggal_tkf", $tanggal_tkf, PDO::PARAM_STR);
 				$save->bindParam(":status", $status, PDO::PARAM_STR);
 				$save->bindParam(":catat", $catat, PDO::PARAM_STR);

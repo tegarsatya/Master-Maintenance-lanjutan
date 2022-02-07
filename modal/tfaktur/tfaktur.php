@@ -11,65 +11,65 @@
 	switch($modal){
 		case "input":
 ?>
-        <link rel="stylesheet" href="<?php echo("$sistem/sumoselect/sumoselect.min.css"); ?>" type="text/css" />
         <div class="modal-header">
             <h6 class="modal-title" id="exampleModalLabel">Input Data - Tuker Faktur</h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
             </button>
         </div>
-        <form id="formtransaksi" action="#" method="post" autocomplete="off" enctype="multipart/form-data">
-        <input type="hidden" name="nmenu" id="nmenu" value="tfaktur" readonly="readonly" />
-        <input type="hidden" name="nact" id="nact" value="input" readonly="readonly" />
+        <form id="formmenu" action="#" method="post" autocomplete="off">
+        <input type="hidden" name="namamodal" id="namamodal" value="tfaktur" readonly="readonly" />
+        <input type="hidden" name="namamenu" value="input" readonly="readonly" />
         <div class="modal-body">
             <div class="row">
-                <div class="form-group col-md-12">
-                	<table width="100%">
-                    <tr>
-                        	<td width="35%"><label>Nomor Faktur <span class="tx-danger">*</span></label></td>
+            <div class="form-group col-md-6">
+                    <label>Nomor Faktur <span class="tx-danger">*</span></label>
+                    <select name="id_tfk" class="form-control sumoselect" required="required">
+                    	<option value="">-- Pilih Nomor Faktur --</option>
+                    <?php
+						$master		= $conn->prepare("SELECT id_tfk, kode_tfk FROM transaksi_faktur ORDER BY kode_tfk ASC");
+						$master->execute();
+						while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
+					?>
+                    	<option value="<?php echo($hasil['id_tfk']); ?>"><?php echo($hasil['kode_tfk']); ?></option>
+                    <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                        <tr>
+                        	<td width="35%"><label>Nama Outlet <span class="tx-danger">*</span></label></td>
                         	<td width="5%"></td>
                         	<td width="60%">
-                            <select name="kodetukerfaktur" id="kodetukerfaktur" class="form-control sumoselect" onchange="caritukerfaktur()" required="required">
-                                <option value="">-- Select Nomor Faktur --</option>
+                            <select name="id_kot" class="form-control sumoselect" required="required">
+                                <option value="">-- Pilih Outlet --</option>
                             <?php
-                                // $lunas	= 'Sudah Tuker Faktur';
-                                $master	= $conn->prepare("SELECT A.id_tfk, A.kode_tfk, B.nama_out FROM transaksi_faktur AS A LEFT JOIN outlet AS B ON A.id_out=B.id_out ORDER BY A.tgl_tfk ASC");
-                                $master->bindParam(PDO::PARAM_STR);
+                                $master		= $conn->prepare("SELECT id_out, nama_out FROM outlet ORDER BY nama_out ASC");
                                 $master->execute();
-                                while($hasil	= $master->fetch(PDO::FETCH_ASSOC)){
+                                while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
                             ?>
-                                <option value="<?php echo($hasil['id_tfk']); ?>"><?php echo("$hasil[kode_tfk] ($hasil[nama_out])"); ?></option>
+                                <option value="<?php echo($hasil['id_out']); ?>"><?php echo($hasil['nama_out']); ?></option>
                             <?php } ?>
                             </select>
                             </td>
                         </tr>
-                        <tr>
-                        	<td><label>Outlet <span class="tx-danger">*</span></label></td>
-                        	<td></td>
-                        	<td><input type="text" name="namaoutlet" id="namaoutlet" class="form-control" style="background:#FFFFFF;" placeholder="-" readonly="readonly" /></td>
-                        </tr>
-                        <tr>
-                        	<td><label>Tgl. Faktur <span class="tx-danger">*</span></label></td>
-                        	<td></td>
-                        	<td><input type="text" name="tglfaktur" id="tglfaktur" class="form-control" style="background:#FFFFFF;" placeholder="-" readonly="readonly" /></td>
-                        </tr>
-                        <tr>
-                        	<td><label>Jatuh Tempo Faktur <span class="tx-danger">*</span></label></td>
-                        	<td></td>
-                        	<td><input type="text" name="tgltempo" id="tgltempo" class="form-control" style="background:#FFFFFF;" placeholder="-" readonly="readonly" /></td>
-                        </tr>
-                    </table>
                 </div>
 			</div>
             <div class="row">
+                 <div class="form-group col-sm-6">
+                    <label>Status Tuker Faktur<span class="tx-danger"></span></label>
+                    <input type="text" name="status" id="status" class="form-control" value="<?php echo('Sudah Tuker Faktur'); ?>" readonly="readonly" />
+                </div>
                 <div class="form-group col-md-6">
                     <label>Tanggal Tuker Faktur<span class="tx-danger">*</span></label>
                     <input type="text" name="tanggal_tkf" id="tanggal_tkf" class="form-control fortgl" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" required="required" />
                     <div id="imgloading"></div>
                 </div>
-                 <div class="form-group col-sm-6">
-                    <label>Status Tuker Faktur<span class="tx-danger"></span></label>
-                    <input type="text" name="status" id="status" class="form-control" value="<?php echo('Sudah Tuker Faktur'); ?>" readonly="readonly" />
+			</div>
+            <!-- <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Tanggal Faktur<span class="tx-danger">*</span></label>
+                    <input type="text" name="tanggal" class="form-control fortgl" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" required="required" />
+                    <div id="imgloading"></div> -->
                 </div>
 			</div>
         </div>
@@ -78,19 +78,115 @@
             <button type="submit" id="bsave" class="btn btn-dark btn-xs">Simpan</button>
         </div>
 		</form>
-        
+        <?php
+		break;
+		case "update":
+		$kode	= $secu->injection($_GET['keycode']);
+		$read	= $conn->prepare("SELECT id_kot, id_tfk, tanggal_tkf, status FROM tuker_faktur WHERE id_tkf_t=:kode");
+		$read->bindParam(':kode', $kode, PDO::PARAM_STR);
+		$read->execute();
+		$view	= $read->fetch(PDO::FETCH_ASSOC);
+?>
+        <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalLabel">Update Data - Tuker Faktur</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+            </button>
+        </div>
+        <form id="formmenu" action="#" method="post" autocomplete="off">
+        <input type="hidden" name="namamodal" id="namamodal" value="tfaktur" readonly="readonly" />
+        <input type="hidden" name="namamenu" value="update" readonly="readonly" />
+        <input type="hidden" name="keycode" value="<?php echo($kode); ?>" readonly="readonly" />
+        <div class="modal-body">
+            <div class="row">
+            <div class="form-group col-md-6">
+                    <label>Nama Outlet <span class="tx-danger">*</span></label>
+                    <select name="id_kot" class="form-control sumoselect" required="required">
+                    	<option value="">-- Pilih Nama Outlet--</option>
+                    <?php
+						$master		= $conn->prepare("SELECT id_out, nama_out FROM outlet ORDER BY nama_out ASC");
+						$master->execute();
+						while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
+                            $pilih	= ($view['id_kot']==$hasil['id_out']) ? 'selected="selected"' : '';
+					?>
+                    	<option value="<?php echo($hasil['id_out']); ?>" <?php echo($pilih); ?>><?php echo($hasil['nama_out']); ?></option>
+                    <?php } ?>
+                    </select>
+                </div>
+            <div class="form-group col-md-6">
+                    <label>Nomor Faktur <span class="tx-danger">*</span></label>
+                    <select name="id_tfk" class="form-control sumoselect" required="required">
+                    	<option value="">-- Pilih Nomor Faktur --</option>
+                    <?php
+						$master		= $conn->prepare("SELECT id_tfk, kode_tfk FROM transaksi_faktur ORDER BY kode_tfk ASC");
+						$master->execute();
+						while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
+                            $pilih	= ($view['id_tfk']==$hasil['id_tfk']) ? 'selected="selected"' : '';
+					?>
+                    	<option value="<?php echo($hasil['id_tfk']); ?>" <?php echo($pilih); ?>><?php echo($hasil['kode_tfk']); ?></option>
+                    <?php } ?>
+                    </select>
+                </div>
+              
+			</div>
+            <div class="row">
+            <div class="form-group col-md-6">
+                    <label>Tanggal Tuker Faktur<span class="tx-danger">*</span></label>
+                    <input type="text" name="tanggal_tkf" class="form-control fortgl" value="<?php echo($view['tanggal_tkf']); ?>" placeholder="9999-99-99" required="required" />
+                    <div id="imgloading"></div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Status Tuker Faktur<span class="tx-danger"></span></label>
+                    <input type="text" name="status" class="form-control" value="<?php echo($view['status']); ?>" readonly="readonly" />
+                </div>
+			</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+            <button type="submit" id="bsave" class="btn btn-dark btn-xs">Update</button>
+        </div>
+		</form>
+<?php
+		break;
+		case "delete":
+		$kode	= $secu->injection($_GET['keycode']);
+?>
+        <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalLabel">Konfirmasi</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+            </button>
+        </div>
+        <form id="formmenu" action="#" method="post" autocomplete="off">
+        <input type="hidden" name="namamodal" id="namamodal" value="tfaktur" readonly="readonly" />
+        <input type="hidden" name="namamenu" value="delete" readonly="readonly" />
+        <input type="hidden" name="keycode" value="<?php echo($kode); ?>" readonly="readonly" />
+        <div class="modal-body">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-danger alert-dismissible mg-b-0 fade show" role="alert">
+                        <strong>Informasi!</strong> Hapus data Tuker Faktur?
+                    </div>
+                    <div id="imgloading"></div>
+                </div>
+			</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+            <button type="submit" id="bsave" class="btn btn-dark btn-xs">Hapus</button>
+        </div>
+		</form>
 <?php
 		break;
 	}
 	$conn	= $base->close();
 ?>
-	<script type="text/javascript" src="<?php echo("$sistem/sumoselect/jquery.sumoselect.min.js"); ?>"></script>
-	<script type="text/javascript" src="<?php echo($data->sistem('url_sis').'/config/js/fazlurr.js'); ?>"></script>
-	<script type="text/javascript" src="<?php echo("$sistem/sumoselect/jquery.sumoselect.min.js"); ?>"></script>
-	<script type="text/javascript">
-	$('.sumoselect').SumoSelect({
-		csvDispCount: 3,
-		search: true,
-		searchText:'Enter here.'
-	});
-    </script>
+	<script type="text/javascript" src="<?php echo("$sistem/config/js/fazlurr.js"); ?>"></script>
+	<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />-->
+ <!--       <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>-->
+ <!--       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>-->
+	<!--<script type="text/javascript">-->
+ <!--    $(document).ready(function() {-->
+ <!--        $('#tuker').select2();-->
+ <!--    });-->
+ <!--   </script>-->
