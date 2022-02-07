@@ -43,20 +43,24 @@
                     <th><center>#</center></th>
                     <th>NAMA PRODUK</th>
                     <th>KATEGORI PRODUK</th>
-					<th>KATEGORI OBAT</th>
+                    <th>KATEGORI OBAT</th>
+                    <th>KODE PRODUK JADI</th>
                     <th>UKURAN</th>
                     <th>NO. BATCH</th>
                     <th>ED</th>
+					<th><div align="right">GUDANG</div></th>
                     <th><div align="right">HARGA</div></th>
+					<th><div align="right">RENTAN WAKTU</div></th>
                     <th><div align="right">HARGA + PPN</div></th>
                     <th><div align="right">KUANTITAS</div></th>
+                    <th><center>MINIMAL STOK PRODUK</center></th>
                     <th>KETERANGAN</th>
 				</tr>
     		</thead>
             <tbody>
 			<?php
 				$nomor	= 1;
-				$master	= $conn->prepare("SELECT A.no_bcode, A.tgl_expired, A.sisa_psd, B.kategori_obat, B.nama_pro, B.berat_pro, C.harga_phg, C.hargap_phg, D.nama_kpr, E.nama_spr FROM produk_stokdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr WHERE A.sisa_psd>0 AND B.nama_pro LIKE '%$search%' AND C.status_phg=:active ORDER BY B.nama_pro ASC");
+				$master	= $conn->prepare("SELECT A.no_bcode, A.tgl_expired,A.gudang, A.tgl_psd, A.sisa_psd,B.kategori_obat,B.kode_produk_jadi, B.nama_pro, B.berat_pro,B.minstok_pro, C.harga_phg, C.hargap_phg, D.nama_kpr, E.nama_spr FROM produk_stokdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr WHERE A.sisa_psd>0 AND B.nama_pro LIKE '%$search%' AND C.status_phg=:active ORDER BY B.nama_pro ASC");
 				$master->bindParam(':active', $active, PDO::PARAM_STR);
 				$master->execute();
 				while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
@@ -66,13 +70,25 @@
                     <td><center><?php echo($nomor); ?></center></td>
                     <td><?php echo($hasil['nama_pro']); ?></td>
                     <td><?php echo($hasil['nama_kpr']); ?></td>
-					<td><?php echo($hasil['kategori_obat']); ?></td>
+                    <td><?php echo($hasil['kategori_obat']); ?></td>
+                    <td><?php echo($hasil['kode_produk_jadi']); ?></td>
                     <td><?php echo($hasil['berat_pro']); ?> <?php echo($hasil['nama_spr']); ?></td>
                     <td><?php echo($hasil['no_bcode']); ?></td>
                     <td><?php echo($hasil['tgl_expired']); ?></td>
+					<td><?php echo($hasil['gudang']); ?></td>
                     <td><div align="right"><?php echo($hasil['harga_phg']); ?></div></td>
+					<td><div align="right">
+					<?php 
+						// $booking    	=new DateTime($hasil['tgl_psd']);
+                        // $today        	=new DateTime();
+						$awal  = date_create($hasil['tgl_psd']);
+						$akhir = date_create();
+                        $diff 			= date_diff( $awal, $akhir );
+                        echo $diff->days; echo "";
+                    ?></div></td>
                     <td><div align="right"><?php echo($hasil['hargap_phg']); ?></div></td>
                     <td><div align="right"><?php echo($hasil['sisa_psd']); ?></div></td>
+                    <td><center><?php echo($hasil['minstok_pro']); ?></center></td>
                     <td><?php echo($status); ?></td>
                 </tr>
 			<?php
