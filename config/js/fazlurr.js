@@ -800,6 +800,185 @@ function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori
 	$('#modal1').modal('hide');
 }
 
+//donasi by tegar
+function getproductsalesd(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 1 : jumlah;
+	//var diskon	= $("#pdiskon"+nomor).val(),
+		//diskon	= diskon=='' ? 0 : diskon;
+	//var diskon	= $("#diskon1").val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var pppn	= $("#pppn").val(),
+		pppn	= pppn=='' ? 0 : bersih(pppn);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	$("#satuanqty"+nomor).html(satuanqty);
+	$("#nobcode"+nomor).html(bcode);
+	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
+	$("#pdiskon"+nomor).val(diskon);
+	$("#prostok"+nomor).val(stok);
+	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
+	$("#product"+nomor).val(produk);
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	//$("#product"+nomor).val(id);
+	cart(nomor, kode, 'addsales');
+	$("#kodestok"+nomor).val(kode);
+	$('#modal1').modal('hide');
+}
+
+function hitungsalesd(nomor){
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+		//pjumlah	= pjumlah=='' ? '' : bersih(pjumlah);
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var diskon	= $("#pdiskon"+nomor).val(),
+		diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(pjumlah==0 || pjumlah==''){
+		swal("Error", "Jumlah order tidak boleh kosong...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(parseInt(pjumlah)>parseInt(stok)){
+			swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+			$("#pjumlah"+nomor).val(1);
+		}
+	}
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+function jumlahsalesd(nomor){
+	var outlet	= $("#outlet").val();
+	var product	= $("#product"+nomor).val();
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var	minorder= $("#minorder").val();
+	//var	diskon1	= $("#diskon1").val();
+	//var	diskon2	= $("#diskon2").val();
+	//var diskon	= (parseInt(jumlah)<=parseInt(minorder)) ? diskon1 : diskon2;
+	var diskon	= $("#pdiskon"+nomor).val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(outlet==''){
+		swal("Error", "Pilih outlet dulu...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(product==''){
+			swal("Error", "Pilih produk dulu...", "error");
+			$("#pjumlah"+nomor).val(1);
+		} else {
+			if(pjumlah==0 || pjumlah==''){
+				swal("Error", "Jumlah order tidak boleh kosong...", "error");
+				$("#pjumlah"+nomor).val(1);
+			} else {
+				if(parseInt(pjumlah)>parseInt(stok)){
+					swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+					$("#pjumlah"+nomor).val(1);
+				}
+			}
+			$("#pdiskon"+nomor).val(diskon);
+			$("#pharga"+nomor).val(titik(harga));
+			//$("#psubtotal"+nomor).val(titik(subtot));
+			$("#ptotal"+nomor).val(titik(total));
+			$("#pstotal").val(titik(stotal));
+			$("#pppn").val(titik(ppn));
+			$("#pgtotal").val(titik(gtotal));
+		}
+	}
+}
+
+function addsalesd(nomor, outlet){
+	var cart	= $("#cartaddsales").val();
+	var mitra	= $("#"+outlet).val();
+	$.ajax({
+		url		: usuper+"/modal/addsalesd/addsalesd.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "m" : mitra, "x" : nomor, "y" : cart },
+		success	: function(data){ $(".modal-content").html(data); }
+	});
+}
+
+function ceksalesd(){
+	var jumlah	= $("#jumaddsales").val();
+	var kode	= $("#outlet").val();
+	$("#imgloading1").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/ajax/ceksalesd/ceksalesd.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		cache		: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#koout").val(json.koout);
+			$("#fkout").val(json.fkout);
+			$("#minorder").val(json.minorder);
+			$("#diskon1").val(json.diskon1);
+			$("#diskon2").val(json.diskon2);
+			$("#jatuhtempo").val(json.jatuhtempo);
+			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
+		},
+		error: function(data){ swal("Error", "Proses data error...", "error"); },
+		complete: function(data){
+			$("#imgloading1").html('');
+		}
+	});
+}
+
+
 function jumlahorder(nomor){
 	var harga	= $("#pharga"+nomor).val(),
 		harga	= harga=='' ? 0 : bersih(harga);
