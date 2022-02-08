@@ -46,7 +46,7 @@
 					$master->execute();
 					while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
 				?>
-                	<tr onClick="<?php echo("getproductsales('$nomor', '$hasil[id_psd]', '$hasil[id_pro]', '$hasil[nama_pro]', '$hasil[kode_pro]', '$hasil[harga_phg]', '$hasil[berat_pro]', '$hasil[nama_kpr]', '$hasil[satuan_kpr]', '$hasil[nama_spr]', '$hasil[no_bcode]', '$hasil[tgl_expired]', '$hasil[sisa_psd]', '$hasil[persen_pds]')"); ?>">
+                	<tr onClick="<?php echo("getproductsales('$nomor', '$hasil[id_psd]', '$hasil[id_pro]', '$hasil[nama_pro]', '$hasil[kode_pro]', '$hasil[harga_phg]', '$hasil[berat_pro]', '$hasil[nama_kpr]', '$hasil[satuan_kpr]', '$hasil[nama_spr]', '$hasil[no_bcode]', '$hasil[tgl_expired]', '$hasil[gudang]', '$hasil[sisa_psd]', '$hasil[persen_pds]')"); ?>">
                     	<td><?php echo($hasil['kode_pro']); ?></td>
                     	<td><?php echo($hasil['nama_pro']); ?></td>
                     	<td><center><?php echo($hasil['no_bcode']); ?></center></td>

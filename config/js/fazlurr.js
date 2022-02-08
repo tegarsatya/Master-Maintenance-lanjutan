@@ -759,7 +759,7 @@ function getproduct(nomor, id, nama, code, harga, berat, kategori, satuan){
 	$('#modal1').modal('hide');
 }
 
-function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, stok, diskon){
+function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
 	var jumlah	= $("#pjumlah"+nomor).val(),
 		jumlah	= jumlah=='' ? 1 : jumlah;
 	//var diskon	= $("#pdiskon"+nomor).val(),
@@ -782,6 +782,7 @@ function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori
 	$("#satuanqty"+nomor).html(satuanqty);
 	$("#nobcode"+nomor).html(bcode);
 	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
 	$("#pdiskon"+nomor).val(diskon);
 	$("#prostok"+nomor).val(stok);
 	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');

@@ -25,7 +25,7 @@
 	$subtot	= 0;
 	$total	= 0;
 	$active	= 'Active';
-	$master	= $conn->prepare("SELECT A.id_psd, A.jumlah_tsd, A.harga_tsd, A.diskon_tsd, A.total_tsd, B.id_pro, B.kode_pro, B.nama_pro, B.berat_pro, C.nama_kpr, C.satuan_kpr, D.nama_spr, E.no_bcode, E.tgl_expired FROM transaksi_salesdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN kategori_produk AS C ON B.id_kpr=C.id_kpr LEFT JOIN satuan_produk AS D ON B.id_spr=D.id_spr LEFT JOIN produk_stokdetail AS E ON A.id_psd=E.id_psd WHERE A.id_tsl=:kode");
+	$master	= $conn->prepare("SELECT A.id_psd, A.jumlah_tsd, A.harga_tsd, A.diskon_tsd, A.total_tsd, B.id_pro, B.kode_pro, B.nama_pro, B.berat_pro, C.nama_kpr, C.satuan_kpr, D.nama_spr, E.gudang, E.no_bcode, E.tgl_expired FROM transaksi_salesdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN kategori_produk AS C ON B.id_kpr=C.id_kpr LEFT JOIN satuan_produk AS D ON B.id_spr=D.id_spr LEFT JOIN produk_stokdetail AS E ON A.id_psd=E.id_psd WHERE A.id_tsl=:kode");
 	$master->bindParam(':kode', $kode, PDO::PARAM_STR);
 	$master->execute();
 	while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
@@ -38,6 +38,7 @@
 						</td>
 						<td><div id="prodetail'.$nomor.'">'.$hasil['nama_kpr'].' ('.$hasil['berat_pro'].' '.$hasil['nama_spr'].')</div></td>
 						<td><div id="nobcode'.$nomor.'">'.$hasil['no_bcode'].'</div></td>
+						<td><div id="gudang'.$nomor.'">'.$hasil['gudang'].'</div></td>
 						<td><div id="tgled'.$nomor.'">'.$hasil['tgl_expired'].'</div></td>
 						<td>'.$data->angka($hasil['harga_tsd']).'<input type="hidden" name="harga[]" id="pharga'.$nomor.'" class="inputangka" onkeyup="angka(this)" value="'.$hasil['harga_tsd'].'" placeholder="0" readonly="readonly" /></td>
 						<td>

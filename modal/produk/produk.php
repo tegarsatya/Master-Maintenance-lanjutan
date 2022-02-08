@@ -88,7 +88,14 @@
                             <option value="Obat Bebas Terbatas">Obat Bebas Terbatas</option>
                             <option value="Obat Bebas">Obat Bebas</option>
                             <option value="Obat Keras">Obat Keras</option>
+                            <option value="Suplemen">Suplemen</option>
+                            <option value="Obat Tradisional">Obat Tradisional</option>
+                            
                     </select>
+                </div>
+                 <div class="form-group col-md-6">
+                    <label>Kode Produk Jadi <span class="tx-danger">*</span></label>
+                    <input type="text" name="kode_produk_jadi" class="form-control" placeholder="kode Produk Jadi" required="required" />
                 </div>
 			</div>
             <div class="row">
@@ -112,7 +119,7 @@
 		break;
 		case "update":
 		$kode	= $secu->injection($_GET['keycode']);
-		$read	= $conn->prepare("SELECT kode_pro, nama_pro, berat_pro, id_kpr, id_spr, rak_pro, section_pro, minstok_pro FROM produk WHERE id_pro=:kode");
+		$read	= $conn->prepare("SELECT kode_pro, nama_pro, berat_pro, id_kpr, id_spr, rak_pro, section_pro, minstok_pro, kode_produk_jadi, kategori_obat FROM produk WHERE id_pro=:kode");
 		$read->bindParam(':kode', $kode, PDO::PARAM_STR);
 		$read->execute();
 		$view	= $read->fetch(PDO::FETCH_ASSOC);
@@ -198,8 +205,14 @@
                         <option value="Obat Bebas Terbatas">Obat Bebas Terbatas</option>
                         <option value="Obat Bebas">Obat Bebas</option>
                         <option value="Obat Keras">Obat Keras</option>
+                        <option value="Suplemen">Suplemen</option>
+                        <option value="Obat Tradisional">Obat Tradisional</option>
                     </select>
                     <div id="imgloading"></div>
+                </div>
+                 <div class="form-group col-md-6">
+                    <label>Kode Produk jadi <span class="tx-danger">*</span></label>
+                    <input type="text" name="kode_produk_jadi" class="form-control" value="<?php echo($view['kode_produk_jadi']); ?>" placeholder="Kode Produk jadi" required="required" />
                 </div>
 			</div>
         </div>

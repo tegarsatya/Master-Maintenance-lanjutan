@@ -1,6 +1,6 @@
 var	server	= window.location.pathname.split("/");
 var	usuper	= window.location.origin + "/" + server[1];
-var menu	= server[2];
+var menu	= server[2].replace('.php','');
 var halaman	= $("#halaman").val();
 var maximal	= $("#maximal").val();
 $(document).ready(function(){
@@ -61,7 +61,7 @@ function bersih(nilai){
 
 $("#harga").change(function(){
 	var	harga	= bersih($("#harga").val());
-	var ppn		= (parseInt(harga) * 10) / 100;
+	var ppn		= (parseInt(harga) * 1);
 	var total	= parseInt(harga) + parseInt(ppn);
 	$("#hargappn").val(titik(total));
 });
@@ -1060,10 +1060,369 @@ function sumitemrorder(){
 	$("#total").val(titik(total));
 }
 
-function tfstokout(){
-	var status		= $("#status").val(),
-		status		= status==='' ? 1 : true(status);
-	var gudang		= $("#gudang").val(),
-		gudang		= gudang==='' ? 0 : true(gudang);
-	var 
+// add by suryo
+function transferType(type, self_apl) {
+	if (type == 'IN') {
+		$("#transfer_apl_from").val("");
+		$("#transfer_apl_from").trigger('change');
+		$("#transfer_apl_to").val(self_apl);
+		$("#transfer_apl_to").trigger('change');
+		$("#labelTransferType").text("Jumlah Masuk");
+	}
+	if (type == 'OUT') {
+		$("#transfer_apl_from").val(self_apl);
+		$("#transfer_apl_from").trigger('change');
+		$("#transfer_apl_to").val("");
+		$("#transfer_apl_to").trigger('change');
+		$("#labelTransferType").text("Jumlah Keluar");
+	}
+	if (type == '') {
+		$("#transfer_apl_from").val("");
+		$("#transfer_apl_from").trigger('change');
+		$("#transfer_apl_to").val("");
+		$("#transfer_apl_to").trigger('change');
+		$("#labelTransferType").text("Jumlah");
+	}
+	cleanTransferStok();
 }
+
+function addProductTransfer(menu, type, from, to, date, self, maksimal){
+	var total	= $('.itemproduct').length;
+	var jumlah	= $("#count"+menu).val();
+	var ttype	= $("#"+type).val();
+	var tfrom	= $("#"+from).val();
+	var tto		= $("#"+to).val();
+	var tdate	= $("#"+date).val();
+	var tfromnm	= $("#"+from+" option:selected").text();
+	var ttonm	= $("#"+to+" option:selected").text();
+	var ttypenm	= $("#"+type+" option:selected").text();
+	if (ttype == '' || tfrom == '' || tto == '' || tdate == ''){
+		swal("Maaf!", "Tipe, Tanggal, Transfer Asal & Tujuan tidak boleh kosong", "warning");
+	} else if (tfrom == tto) {
+		swal("Maaf!", "Transfer Asal & Tujuan tidak boleh dari system yang sama", "warning");
+	} else if (parseInt(total) >= parseInt(maksimal)){
+		swal("Maaf!", "Jumlah "+ttypenm+" melebihi maksimal "+maksimal+" produk", "warning");
+	} else if (!checkAnyEmptyJumlah(menu)) {
+		swal("Maaf!", "Jumlah "+ttypenm+" tidak boleh ada yang kosong", "warning");
+	} else if (ttype == 'IN' && (tfrom == self || tto != self)) {
+		swal("Warning", "Pilihan Transfer Asal dan Tujuan tidak benar", "warning");
+	} else if (ttype == 'OUT' && (tfrom != self || tto == self)) {
+		swal("Warning", "Pilihan Transfer Asal dan Tujuan tidak benar", "warning");
+	} else {
+		$.ajax({
+			type	: "GET",
+			url		: usuper+"/ajax/"+menu+"/"+menu+".php",
+			data	: { "jumlah" : jumlah, "from": tfrom, "to": tto, "self": self, "fromnm": tfromnm, "tonm": ttonm, "type": ttype },
+			success	: function(data){
+				$("#data"+menu).append(data);
+				var total	= parseInt(jumlah) + 1;
+				$("#count"+menu).val(total);
+			}
+		});
+	}
+}
+
+function removeTransferStok(menu, nomor){
+	var jumlah	= $("#count"+menu).val();
+	var total	= $("#ptotal"+nomor).val();
+	var pstotal	= $("#pstotal").val();
+	//var pgtotal	= $("#pgtotal").val();
+	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
+	var ppn		= (stotal * 1);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		$("#tr"+menu+""+nomor).remove();
+		var jitem = parseInt(jumlah) - 1;
+		$("#count"+menu).val(jitem);
+		$("#pstotal").val(titik(stotal));
+		$("#pppn").val(titik(ppn));
+		$("#pgtotal").val(titik(gtotal));
+	}
+}
+
+function cleanTransferStok() {
+	$("#dataaddProductTransfer tr").remove();
+	$("#cartaddProductTransfer").val('');
+	$("#countaddProductTransfer").val('0');
+}
+
+function checkTransferApl(type, tapl, self_apl, self_apl_name) {
+	if (type != '') {
+		if (tapl == 'from') {
+			var from = $("#transfer_apl_from option:selected").val();
+			if (type == 'IN' && from == self_apl) {
+				swal("Warning", "Transfer "+type+" harus dari luar "+self_apl_name, "warning");
+			}
+			if (type == 'OUT' && from != self_apl) {
+				swal("Warning", "Transfer "+type+" harus dari "+self_apl_name, "warning");
+			}		
+		}
+		if (tapl == 'to') {
+			var to = $("#transfer_apl_to option:selected").val();
+			if (type == 'IN' && to != self_apl) {
+				swal("Warning", "Transfer "+type+" harus dari "+self_apl_name, "warning");
+			}
+			if (type == 'OUT' && to == self_apl) {
+				swal("Warning", "Transfer "+type+" harus dari luar "+self_apl_name, "warning");
+			}
+		}	
+	} else {
+		swal("Warning", "Tipe Transfer harus dipilih", "warning");
+	}
+	cleanTransferStok();
+}
+
+function addProductTransferModal(nomor, menu, type, fromnm, from){
+	var cart	= $("#cartaddProductTransfer").val();
+	var kode	= $("#product"+nomor).val();
+	$.ajax({
+		url		: usuper+"/modal/"+menu+"/"+menu+type+".php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "x" : nomor, "y" : kode, "fromnm": fromnm, "type": type, "cart": cart, "from": from},
+		success	: function(data){ $(".modal-content-lg").html(data); }
+	});
+}
+
+function deleteProductTransfer(nomor){
+	var jumlah	= $("#countaddProductTransfer").val();
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		$("#addProductTransfer"+nomor).remove();
+		var total	= parseInt(jumlah) - 1;
+		$("#countaddProductTransfer").val(total);
+	}
+}
+
+
+function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, stok, id_trd, tgl_psd, gudang) {
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	$("#product"+nomor).val(produk);
+	$("#namaproduct"+nomor).val(nama);
+	$("#kodestok"+nomor).val(kode);
+	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
+	$("#nobcode"+nomor).html(bcode);
+	$("#bcode"+nomor).val(bcode);
+	$("#idpsd"+nomor).val(kode);
+	$("#id_trd"+nomor).val(id_trd);
+	$("#tgl_expired"+nomor).val(tgled);
+	$("#tgl_psd"+nomor).val(tgl_psd);
+	$("#gudang"+nomor).val(gudang);
+	$("#tgled"+nomor).html(tgled);
+	$("#prostok"+nomor).html(stok);
+	$("#pharga"+nomor).val(titik(harga));
+	$("#satuanqty"+nomor).html(satuanqty);
+	cart(nomor, kode, 'addProductTransfer');
+	$('#modal2').modal('hide');
+}
+
+function cekProdukTransfer(nomor){
+	var produk	= $("#product"+nomor).val();
+	if(produk==''){
+		$("#pjumlah"+nomor).val('');
+		swal("Error", "Pilih produk...", "error");	
+	} else {
+		var stok = parseInt($("#prostok"+nomor).text());
+		var jumlah = parseInt($("#pjumlah"+nomor).val().replace('.', ''));
+		if (jumlah == 0 || jumlah == '') {
+			swal("Maaf!", "Jumlah transfer harus diisi", "warning");
+		}
+		if (jumlah > stok) {
+			$("#pjumlah"+nomor).val('');
+			swal("Maaf!", "Jumlah yang diinput tidak boleh melebihi stok", "warning");
+		}
+	}
+}
+
+$("#formProductTransfer").submit(function(e){
+	e.preventDefault();
+	var nmenu	= $("#nmenu").val();
+	var nact	= $("#nact").val();
+	var type	= $("#transfer_apl_type").val();
+	var count	= $("#countaddProductTransfer").val();
+	var ttypenm	= $("#transfer_apl_type option:selected").text();
+	// validation null product
+	if (count == 0 || count == '0' || count == '') {
+		swal("Maaf!", "Produk tidak boleh kosong", "error");
+	// validation any null jumlah
+	} else if (!checkAnyEmptyJumlah('addProductTransfer')) {
+		swal("Maaf!", "Jumlah "+ttypenm+" tidak boleh ada yang kosong", "warning");
+	} else {
+		$("#bsave").prop("disabled", true);
+		$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+		$.ajax({
+			url			: usuper+"/modal/"+nmenu+"/action.php?act="+nact,
+			type		: "POST",
+			async		: true,
+			dataType	: "text",
+			data		: new FormData(this),
+			contentType	: false,
+			cache		: false,
+			processData	: false,
+			beforeSend	: function(){},
+			success: function(data){
+				var json	= JSON.parse(data);
+				if(json.result=="Success"){
+					swal({
+						title	: "Selamat!",
+						text	: "Data berhasil di"+nact+"...",
+						type	: "success",
+						timer	: 2000,
+						showCancelButton: false,
+						showConfirmButton: false
+					}, function(){
+						window.location.href = usuper+"/"+nmenu;
+					});
+				} else { 
+					swal("Maaf!", "Data gagal di"+nact+"..., pesan: "+json.result, "error"); 
+				}
+			},
+			error: function(data){ swal("Maaf!", "Proses data error...", "error"); },
+			complete: function(data){
+				$("#bsave").prop("disabled", false);
+				$("#formProductTransfer").get(0).reset();
+				$("#imgloading").html('');
+			}
+		});
+	}
+});
+
+function checkAnyEmptyJumlah(menu) {
+	var count = $("#count"+menu).val();
+	if (count != '0' && count != '') {
+		for (let i = 1; i <= parseInt(count); i++) {
+			var jumlah = $("#pjumlah"+i).val();
+			if (jumlah == '0' || jumlah == '') {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function approvalTransferStokModal(menu,id_ttr,approval) {
+	$.ajax({
+		url		: usuper+"/modal/"+menu+"/approval.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: {"id_ttr": id_ttr, "approval": approval},
+		success	: function(data){
+			$(".modal-content").html(data);
+		}
+	});
+}
+
+function formApprovalTransferStokModal() {
+	var nmenu	= $("#nmenu").val();
+	var nact	= $("#nact").val();
+	var approval= $("#approval").val();
+	var kode	= $("#kode").val();
+	var kode_ext= $("#kode_ext").val();
+	var id		= $("#id").val();
+	var type	= $("#type").val();
+	var id_app_from	= $("#id_app_from").val();
+	var id_app_to	= $("#id_app_to").val();
+	// validation null product
+	$("#btnApprove").prop("disabled", true);
+	$("#btnReject").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+nmenu+"/action.php?act="+nact,
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: {"kode": kode, "approval": approval, "id": id, "type": type, "id_app_from": id_app_from, "id_app_to": id_app_to, "kode_ext": kode_ext},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if(json.result=="Success"){
+				var approvalLabel = (approval === 1 || approval === '1') ? 'Approve' : 'Reject';
+				swal({
+					title	: "Selamat!",
+					text	: "Data berhasil di "+approvalLabel+"...",
+					type	: "success",
+					timer	: 2000,
+					showCancelButton: false,
+					showConfirmButton: false
+				}, function(){
+					window.location.href = usuper+"/"+nmenu;
+				});
+			} else { 
+				$("#btnApprove").prop("disabled", false);
+				$("#btnReject").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Data gagal di"+nact+"..., pesan: "+json.result, "error"); 
+			}
+		},
+		error: function(data){ swal("Maaf!", "Proses data error...", "error"); },
+		complete: function(data){
+			$("#bsave").prop("disabled", false);
+			$("#imgloading").html('');
+			$("#btnApprove").prop("disabled", false);
+			$("#btnReject").prop("disabled", false);
+		}
+	});
+}
+
+function loadTransferStokNotification(menu){
+	$.ajax({
+		url		: usuper+"/modal/"+menu+"/notification.php",
+		type	: "GET",
+		async	: true,
+		dataType: "text",
+		data	: {"menu": menu},
+		success	: function(data){
+			if (data!='') {
+				$(".modal-content").html(data);
+				$("#modal1").modal('show');
+				setInterval(function(){
+					$("#modal1").modal('hide');
+				}, 10000);				
+			}
+		}
+	});
+}
+
+$("#formsalespnp").submit(function(e){
+	e.preventDefault();
+	var modal	= $("#namamodal").val();
+	$("#btnsave").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+modal+"/action.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: new FormData(this),
+		contentType	: false,
+		cache		: false,
+		processData	: false,
+		beforeSend	: function(){},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if (json.status === "Success") {
+				window.location.href = usuper+"/"+json.url;	
+			} else {
+				$("#btnsave").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Pesan error: " + json.message, "warning");
+			}
+		},
+		error: function(data) { 
+			swal("Maaf!", "Proses data error...", "error"); 
+		},
+		complete: function(data){
+			$("#btnsave").prop("disabled", false);
+			$("#formmenu").get(0).reset();
+			$("#imgloading").html('');
+		}
+	});
+});
+
+// end

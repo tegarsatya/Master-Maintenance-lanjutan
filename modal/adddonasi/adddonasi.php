@@ -30,7 +30,6 @@
                     	<th>Kode</th>
                     	<th>Nama</th>
                     	<th><center>Batchcode</center></th>
-						<th><center>Gudang</center></th>
                     	<th><center>Tgl. ED</center></th>
                     	<th><div align="right">Stok</div></th>
                     	<th><div align="right">Harga</div></th>
@@ -40,7 +39,7 @@
 				<?php
 					$status	= 'Active';
 					$no		= 1;
-					$master	= $conn->prepare("SELECT A.id_psd, A.no_bcode, A.tgl_expired, A.gudang, A.sisa_psd, B.id_pro, B.kode_pro, B.nama_pro, B.berat_pro, C.harga_phg, D.nama_kpr, D.satuan_kpr, E.nama_spr, F.persen_pds FROM produk_stokdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr LEFT JOIN produk_diskon AS F ON B.id_pro=F.id_pro WHERE $notin AND A.sisa_psd>0 AND C.status_phg=:status AND F.id_out=:mitra GROUP BY A.id_psd");
+					$master	= $conn->prepare("SELECT A.id_psd, A.no_bcode, A.tgl_expired, A.sisa_psd, B.id_pro, B.kode_pro, B.nama_pro, B.berat_pro, C.harga_phg, D.nama_kpr, D.satuan_kpr, E.nama_spr, F.persen_pds FROM produk_stokdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr LEFT JOIN produk_diskon AS F ON B.id_pro=F.id_pro WHERE $notin AND A.sisa_psd>0 AND C.status_phg=:status AND F.id_out=:mitra GROUP BY A.id_psd");
 					$master->bindParam(':status', $status, PDO::PARAM_STR);
 					$master->bindParam(':mitra', $mitra, PDO::PARAM_STR);
 					$master->execute();
@@ -50,7 +49,7 @@
                     	<td><?php echo($hasil['kode_pro']); ?></td>
                     	<td><?php echo($hasil['nama_pro']); ?></td>
                     	<td><center><?php echo($hasil['no_bcode']); ?></center></td>
-                    	<td><center><?php echo($hasil['gudang']); ?></center></td>
+                    	<!-- <td><center><?php echo($hasil['gudang']); ?></center></td> -->
                     	<td><center><?php echo($hasil['tgl_expired']); ?></center></td>
                     	<td><div align="right"><?php echo($hasil['sisa_psd']); ?></div></td>
                     	<td><div align="right"><?php echo($data->angka($hasil['harga_phg'])); ?></div></td>

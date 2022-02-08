@@ -27,6 +27,7 @@
     </td>
     <td><div id="<?php echo("prodetail$nomor"); ?>">-</div></td>
     <td><div id="<?php echo("nobcode$nomor"); ?>">-</div></td>
+	<td><div id="<?php echo("gudang$nomor"); ?>">-</div></td>
     <td><div id="<?php echo("tgled$nomor"); ?>">-</div></td>
 	<!--<td><input type="text" name="catatan[]" class="form-control" placeholder="Ketik di sini..." /></td>-->
 	<td><input type="text" name="harga[]" id="<?php echo("pharga$nomor"); ?>" class="inputangka" onkeyup="angka(this)" placeholder="0" readonly="readonly" /></td>

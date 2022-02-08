@@ -45,6 +45,7 @@
                             <th>Produk</th>
                             <th>Detail</th>
                             <th>Batchcode</th>
+                            <th>Gudang</th>
                             <th>Tgl. ED</th>
                             <th>Harga</th>
                             <th>Jumlah</th>
@@ -59,16 +60,19 @@
 					</tbody>
                     <tfoot>
                     	<tr>
+                            <td></td>
                         	<td colspan="8"><div align="right"><b>SUBTOTAL</b></div></td>
                             <td><input type="text" name="pstotal" id="pstotal" class="inputtotal" onkeyup="angka(this)" placeholder="0" readonly="readonly" /></td>
                         	<td></td>
                         </tr>
                     	<tr>
+                            <td></td>
                         	<td colspan="8"><div align="right"><b><span id="taxLabel">PPN (10%)</span></b></div></td>
                             <td><input type="text" name="pppn" id="pppn" class="inputtotal" onkeyup="angka(this)" placeholder="0"  /></td>
                         	<td></td>
                         </tr>
                     	<tr>
+                            <td></td>
                         	<td colspan="8"><div align="right"><b>TOTAL</b></div></td>
                             <td><input type="text" name="pgtotal" id="pgtotal" class="inputtotal" onkeyup="angka(this)" placeholder="0" readonly="readonly" /></td>
                         	<td></td>

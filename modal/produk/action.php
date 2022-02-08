@@ -31,7 +31,8 @@
 				$mini	= str_replace('.', '', $_POST['minstok']);
 				$active	= 'Active';
 				$obat	= $secu->injection($_POST['kategori_obat']);
-				$save	= $conn->prepare("INSERT INTO produk VALUES(:kode, :kate,  :satuan, :nomor, :nama, :berat, :rak, :sek, :mini, :active, :obat, :catat, :admin, :catat, :admin)");
+				$kodep	= $secu->injection($_POST['kode_produk_jadi']);
+				$save	= $conn->prepare("INSERT INTO produk VALUES(:kode, :kate,  :satuan, :nomor, :nama, :berat, :rak, :sek, :mini, :active, :obat, :kodep, :catat, :admin, :catat, :admin)");
 				$save->bindParam(":kode", $kode, PDO::PARAM_STR);
 				$save->bindParam(":kate", $kate, PDO::PARAM_STR);
 				$save->bindParam(":satuan", $satuan, PDO::PARAM_STR);
@@ -43,6 +44,7 @@
 				$save->bindParam(":mini", $mini, PDO::PARAM_INT);
 				$save->bindParam(":active", $active, PDO::PARAM_STR);
 				$save->bindParam(":obat", $obat, PDO::PARAM_STR);
+				$save->bindParam(":obat", $kodep, PDO::PARAM_STR);
 				$save->bindParam(":catat", $catat, PDO::PARAM_STR);
 				$save->bindParam(":admin", $admin, PDO::PARAM_STR);
 				$save->execute();
@@ -78,17 +80,19 @@
 				$satuan	= $secu->injection($_POST['satuan']);
 				$nama	= $secu->injection($_POST['nama']);
 				$obat	= $secu->injection($_POST['kategori_obat']);
+				$kodep	= $secu->injection($_POST['kode_produk_jadi']);
 				$nomor	= $secu->injection($_POST['nomor']);
 				$berat	= $secu->injection($_POST['berat']);
 				$rak	= $secu->injection($_POST['rak']);
 				$sek	= $secu->injection($_POST['sek']);
 				$mini	= str_replace('.', '', $_POST['minstok']);
-				$edit	= $conn->prepare("UPDATE produk SET id_kpr=:kate, id_spr=:satuan, kategori_obat=:obat, kode_pro=:nomor, nama_pro=:nama, berat_pro=:berat, rak_pro=:rak, section_pro=:sek, minstok_pro=:mini, updated_at=:catat, updated_by=:admin WHERE id_pro=:kode");
+				$edit	= $conn->prepare("UPDATE produk SET id_kpr=:kate, id_spr=:satuan, kategori_obat=:obat, kode_produk_jadi=:kodep, kode_pro=:nomor, nama_pro=:nama, berat_pro=:berat, rak_pro=:rak, section_pro=:sek, minstok_pro=:mini, updated_at=:catat, updated_by=:admin WHERE id_pro=:kode");
 				$edit->bindParam(":kode", $kode, PDO::PARAM_STR);
 				$edit->bindParam(":kate", $kate, PDO::PARAM_STR);
 				$edit->bindParam(":satuan", $satuan, PDO::PARAM_STR);
 				$edit->bindParam(":nomor", $nomor, PDO::PARAM_STR);
 				$edit->bindParam(":obat", $obat, PDO::PARAM_STR);
+				$edit->bindParam(":kodep", $kodep, PDO::PARAM_STR);
 				$edit->bindParam(":nama", $nama, PDO::PARAM_STR);
 				$edit->bindParam(":berat", $berat, PDO::PARAM_STR);
 				$edit->bindParam(":rak", $rak, PDO::PARAM_STR);
