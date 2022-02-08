@@ -76,7 +76,7 @@
             require_once('config/frame/content.php');
         ?>
             <div class="content-footer">
-            &copy; 2019. All Rights Reserved. Created by <a href="#" target="_blank">ThemePixels Fazlurr X Tegar Satya Negara</a>
+            &copy; 2022. All Rights Reserved. Created by <a href="#" target="_blank">ThemePixels Fazlurr X Tegar Satya Negara</a>
             </div><!-- content-footer -->
         </div>
         <!-- content -->

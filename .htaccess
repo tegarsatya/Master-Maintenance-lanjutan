@@ -167,12 +167,14 @@
     RewriteRule ^transferstok/v/(.*)$ sistem.php?menu=vtransferstok&keycode=$1 [L]
     RewriteRule ^rtransferstok$ sistem.php?menu=rtransferstok [L]
     RewriteRule ^rtransferstok/cari=(.*)$ sistem.php?menu=rtransferstok&cari=$1 [L]
-    RewriteRule ^fdonasi$ sistem.php?menu=fdonasi [L]
-    RewriteRule ^fdonasi/cari=(.*)$ sistem.php?menu=fdonasi&cari=$1 [L]
-    RewriteRule ^fdonasi/i$ sistem.php?menu=ifdonasi [L]
-    RewriteRule ^itemdonasi/(.*)$ sistem.php?menu=itemdonasi&keycode=$1 [L]
-    RewriteRule ^fdonasi/e/(.*)$ sistem.php?menu=efdonasi&keycode=$1 [L]
-    RewriteRule ^fdonasi/v/(.*)$ sistem.php?menu=vfdonasi&keycode=$1 [L]
+    RewriteRule ^fsalesd$ sistem.php?menu=fsalesd [L]
+    RewriteRule ^fsalesd/cari=(.*)$ sistem.php?menu=fsalesd&cari=$1 [L]
+    RewriteRule ^fsalesd/i$ sistem.php?menu=ifsalesd [L]
+    RewriteRule ^itemsalesd/(.*)$ sistem.php?menu=itemsalesd&keycode=$1 [L]
+    RewriteRule ^fsalesd/e/(.*)$ sistem.php?menu=efsalesd&keycode=$1 [L]
+    RewriteRule ^fsalesd/v/(.*)$ sistem.php?menu=vfsalesd&keycode=$1 [L]
+    RewriteRule ^rpenjualand$ sistem.php?menu=rpenjualand [L]
+    RewriteRule ^rpenjualand/cari=(.*)$ sistem.php?menu=rpenjualand&cari=$1 [L]
 
 	ErrorDocument 404 http://localhost/erp/error.php
 	RewriteCond %{QUERY_STRING} .

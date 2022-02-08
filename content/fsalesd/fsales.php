@@ -3,7 +3,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Penjualan</a></li>
+                <li class="breadcrumb-item"><a href="#">Donasi</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Faktur Donasi</li>
             </ol>
         </nav>
@@ -17,9 +17,9 @@
 <div class="content-body">
 	<div class="row mg-b-10">
         <div class="col-sm-6">
-        	<?php echo(($data->akses($admin, $menu, 'A.create_status')==='Active') ? '<a href="'.$sistem.'/fsales/i"><button class="btn btn-primary btn-pill btn-xs"><i class="fa fa-plus-circle"></i> Tambah Data</button></a>' : ''); ?>
-			<a href="#modal1" onclick="<?php echo("caridata('carifsales', 'fsales', '$cari')"); ?>" data-toggle="modal"><button class="btn btn-warning btn-pill btn-xs"><i class="fa fa-search"></i> Cari Data</button></a>
-			<a href="<?php echo($data->sistem('url_sis').'/fsales'); ?>"><button class="btn btn-info btn-pill btn-xs"><i class="fa fa-spinner"></i> Refresh</button></a>
+        	<?php echo(($data->akses($admin, $menu, 'A.create_status')==='Active') ? '<a href="'.$sistem.'/fsalesd/i"><button class="btn btn-primary btn-pill btn-xs"><i class="fa fa-plus-circle"></i> Tambah Data</button></a>' : ''); ?>
+			<a href="#modal1" onclick="<?php echo("caridata('carifsales', 'fsalesd', '$cari')"); ?>" data-toggle="modal"><button class="btn btn-warning btn-pill btn-xs"><i class="fa fa-search"></i> Cari Data</button></a>
+			<a href="<?php echo($data->sistem('url_sis').'/fsalesd'); ?>"><button class="btn btn-info btn-pill btn-xs"><i class="fa fa-spinner"></i> Refresh</button></a>
         </div>
         <div class="col-sm-6">
 			<span class="badge badge-pill badge-danger"><i class="fa fa-search"></i> Search : <?php echo($cari); ?></span>
@@ -31,13 +31,13 @@
             <thead>
                 <tr>
                     <th><center>#</center></th>
-                    <th>Nomor Donasi</th>
+                    <th>Nomor Faktur Donasi</th>
                     <th>Outlet</th>
                     <th><center>Tgl. Donasi</center></th>
-                    <th>Nomor SJ</th>
-                    <th><center>Tgl. SJ</center></th>
-                    <th>Keterangan Donasi</th>
-                    <th><center>Tgl. Donasi</center></th>
+                    <th>Nomor SJ Donasi</th>
+                    <th><center>Tgl. SJ Donasi</center></th>
+                    <th>Nomor Donasi</th>
+                    <th><center>Tgl Donasi</center></th>
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>
                     <th><center>Action</center></th>

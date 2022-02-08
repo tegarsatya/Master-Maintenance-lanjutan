@@ -3,11 +3,11 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Donasi</a></li>
+                <li class="breadcrumb-item"><a href="#">Penjualan</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Surat Jalan</li>
             </ol>
         </nav>
-        <h4 class="content-title">Detail Data - Surat Jalan Donasi</h4>
+        <h4 class="content-title">Detail Data - Surat Jalan</h4>
     </div>
 </div>
 <?php

@@ -231,6 +231,9 @@
 		case "cabang":
 			require_once("content/cabang/cabang.php");
 		break;
+		case "gudang":
+			require_once("content/gudang/gudang.php");
+		break;
 		case "transferstok":
 			require_once("content/transferstok/transferstok.php");
 		break;
@@ -246,5 +249,27 @@
 		case "rtransferstok":
 			require_once("content/rtransferstok/rtransferstok.php");
 		break;
+		case "fsalesd":
+			require_once("content/fsalesd/fsales.php");
+		break;
+		case "ifsalesd":
+			require_once("content/fsalesd/input.php");
+		break;
+		case "itemsalesd":
+			require_once("content/fsalesd/item.php");
+		break;
+		case "efsalesd":
+			require_once("content/fsalesd/edit.php");
+		break;
+		// case "tfsalesd":
+		// 	require_once("content/fsalesdd/tf.php");
+		// break;
+		case "vfsalesd":
+			require_once("content/fsalesd/view.php");
+		break;
+		case "rpenjualand":
+			require_once("content/rpenjualand/rpenjualand.php");
+		break;
+	
 	}
 ?>

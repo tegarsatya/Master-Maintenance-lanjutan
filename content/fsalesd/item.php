@@ -1,12 +1,12 @@
 <?php
 	$uniq	= $secu->injection(@$_GET['keycode']);
 	$code	= base64_decode($uniq);
-	$read	= $conn->prepare("SELECT sj_tfk, id_out, kode_tfk FROM transaksi_faktur WHERE id_tfk=:code");
+	$read	= $conn->prepare("SELECT sj_tfk, id_out, kode_tfk FROM transaksi_faktur_d WHERE id_tfk=:code");
 	$read->bindParam(':code', $code, PDO::PARAM_STR);
 	$read->execute();
 	$view	= $read->fetch(PDO::FETCH_ASSOC);
 ?>
-<form id="formsalespnp" action="#" method="post" autocomplete="off">
+<form id="formsalespnpd" action="#" method="post" autocomplete="off">
 <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
@@ -29,13 +29,13 @@
             <div>Alamat : <?php echo($data->sistem('alamat_sis')); ?></div>
         </div>
         <input type="hidden" name="outlet" id="outlet" value="<?php echo($view['id_out']); ?>" readonly="readonly" />
-        <input type="hidden" name="namamodal" id="namamodal" value="fsales" readonly="readonly" />
+        <input type="hidden" name="namamodal" id="namamodal" value="fsalesd" readonly="readonly" />
         <input type="hidden" name="namamenu" value="items" readonly="readonly" />
         <input type="hidden" name="keycode" value="<?php echo($uniq); ?>" readonly="readonly" />
         <input type="hidden" name="nomorfaktur" value="<?php echo($view['kode_tfk']); ?>" readonly="readonly" />
         <div class="clearfix mg-t-25 mg-b-25"></div>
-        <h5 id="section1" class="tx-semibold">Order Produk</h5>
-        <p class="mg-b-25">Pilih produk yang akan dipesan kepada supplier.</p>
+        <h5 id="section1" class="tx-semibold"> Produk</h5>
+        <p class="mg-b-25">Pilih produk yang akan di Donasikan</p>
         <div class="row row-sm">
             <div class="col-sm-12">
                 <div class="table-responsive">
@@ -45,6 +45,7 @@
                             <th>Produk</th>
                             <th>Detail</th>
                             <th>Batchcode</th>
+                            <th>Gudang</th>
                             <th>Tgl. ED</th>
                             <th>Harga</th>
                             <th>Jumlah</th>
@@ -59,16 +60,19 @@
 					</tbody>
                     <tfoot>
                     	<tr>
+                            <td></td>
                         	<td colspan="8"><div align="right"><b>SUBTOTAL</b></div></td>
                             <td><input type="text" name="pstotal" id="pstotal" class="inputtotal" onkeyup="angka(this)" placeholder="0" readonly="readonly" /></td>
                         	<td></td>
                         </tr>
                     	<tr>
+                            <td></td>
                         	<td colspan="8"><div align="right"><b><span id="taxLabel">PPN (10%)</span></b></div></td>
                             <td><input type="text" name="pppn" id="pppn" class="inputtotal" onkeyup="angka(this)" placeholder="0"  /></td>
                         	<td></td>
                         </tr>
                     	<tr>
+                            <td></td>
                         	<td colspan="8"><div align="right"><b>TOTAL</b></div></td>
                             <td><input type="text" name="pgtotal" id="pgtotal" class="inputtotal" onkeyup="angka(this)" placeholder="0" readonly="readonly" /></td>
                         	<td></td>
@@ -87,7 +91,7 @@
         <div class="clearfix mg-t-25 mg-b-25"></div>
         <div class="row row-sm">
             <div class="col-sm-12">
-                <a href="<?php echo("$sistem/fsales"); ?>" title="Batal"><button type="button" class="btn btn-secondary">Batal</button></a>
+                <a href="<?php echo("$sistem/fsalesd"); ?>" title="Batal"><button type="button" class="btn btn-secondary">Batal</button></a>
                 <button type="submit" id="bsave" class="btn btn-dark">Simpan</button>
                 <div id="imgloading"></div>
             </div>

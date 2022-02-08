@@ -18,18 +18,18 @@
             <div>NPWP No : <?php echo($data->sistem('npwp_sis')); ?></div>
             <div>Alamat : <?php echo($data->sistem('alamat_sis')); ?></div>
         </div>
-        <form id="formsalespnp" action="#" method="post" autocomplete="off">
-        <input type="hidden" name="namamodal" id="namamodal" value="fsales" readonly="readonly" />
+        <form id="formsalespnpd" action="#" method="post" autocomplete="off">
+        <input type="hidden" name="namamodal" id="namamodal" value="fsalesd" readonly="readonly" />
         <input type="hidden" name="namamenu" id="namamenu" value="faktur" readonly="readonly" />
         <input type="hidden" name="keycode" value="<?php echo(base64_encode('FAK'.time())); ?>" readonly="readonly" />
         <div class="row row-sm">
             <div class="col-sm-3">
-                <label>Nomor SJ <span class="tx-danger">*</span></label>
+                <label>Nomor SJ Donasi <span class="tx-danger">*</span></label>
                 <input type="text" name="invoice" id="koout" class="form-control" placeholder="-" />
             </div>
             <div class="col-sm-3">
                 <label>Outlet <span class="tx-danger">*</span></label>
-				<select name="outlet" id="outlet" class="form-control select2" onchange="ceksales()" required="required">
+				<select name="outlet" id="outlet" class="form-control select2" onchange="ceksalesd()" required="required">
                 	<option value="">-- Pilih --</option>
 				<?php
 					$status	= 'Active';
@@ -43,20 +43,20 @@
                 </select>
             </div>
             <div class="col-sm-3">
-                <label>Nomor DONASI <span class="tx-danger">*</span></label>
-                <input type="text" name="nomorfaktur" id="fkout" class="form-control" placeholder="Ketik nomor faktur di sini..." />
+                <label>Nomor Faktur Donasi <span class="tx-danger">*</span></label>
+                <input type="text" name="nomorfaktur" id="fkout" class="form-control" placeholder="Ketik nomor Faktur Donasi di sini Gaess..." />
             </div>
             <div class="col-sm-3">
-                <label>Tanggal DONASI <span class="tx-danger">*</span></label>
+                <label>Tanggal Donasi <span class="tx-danger">*</span></label>
                 <input type="text" name="tglfaktur" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
             </div>
             <div class="col-sm-3 mg-t-10">
-                <label>Tanggal SJ <span class="tx-danger">*</span></label>
+                <label>Tanggal SJ Donasi <span class="tx-danger">*</span></label>
                 <input type="text" name="tglsales" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
             </div>
             <div class="col-sm-3 mg-t-10">
-                <label>keterangan Donasi <span class="tx-danger">*</span></label>
-                <input type="text" name="nomorpo" class="form-control" placeholder="Ketik nomor po di sini..." />
+                <label>Nomor Donasi <span class="tx-danger">*</span></label>
+                <input type="text" name="nomorpo" class="form-control" placeholder="Ketik nomor donasi di sini..." />
             </div>
             <div class="col-sm-3 mg-t-10">
                 <label>Tanggal Donasi <span class="tx-danger">*</span></label>
@@ -70,7 +70,7 @@
         <div class="clearfix mg-t-25 mg-b-25"></div>
         <div class="row row-sm">
             <div class="col-sm-12">
-                <a href="<?php echo("$sistem/fsales"); ?>" title="Batal"><button type="button" class="btn btn-secondary">Batal</button></a>
+                <a href="<?php echo("$sistem/fsalesd"); ?>" title="Batal"><button type="button" class="btn btn-secondary">Batal</button></a>
                 <button type="submit" id="bsave" class="btn btn-dark">Simpan</button>
                 <div id="imgloading"></div>
             </div>
