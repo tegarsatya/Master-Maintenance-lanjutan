@@ -305,6 +305,45 @@
 			return $unik;
 		}
 
+		function transcodetf($kunci, $kode, $tabel) {
+			$prefix = "TRF";
+			$conn	= $this->open();
+			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
+			$conn	= $this->close();
+			$jumlah	= strlen($kunci);
+			$nourut = str_replace($prefix, "", $select['kode']);
+			$nourut = (int) str_replace($kunci, "", $select['kode']);
+			$nourut++;
+			$unik	= $prefix.sprintf("%03s", $nourut).$kunci;
+			return $unik;
+		}
+
+		function transcodedn($kunci, $kode, $tabel) {
+			$prefix = "GIV";
+			$conn	= $this->open();
+			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
+			$conn	= $this->close();
+			$jumlah	= strlen($kunci);
+			$nourut = str_replace($prefix, "", $select['kode']);
+			$nourut = (int) str_replace($kunci, "", $select['kode']);
+			$nourut++;
+			$unik	= $prefix.sprintf("%03s", $nourut).$kunci;
+			return $unik;
+		}
+
+		function transcodepm($kunci, $kode, $tabel) {
+			$prefix = "BOR";
+			$conn	= $this->open();
+			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
+			$conn	= $this->close();
+			$jumlah	= strlen($kunci);
+			$nourut = str_replace($prefix, "", $select['kode']);
+			$nourut = (int) str_replace($kunci, "", $select['kode']);
+			$nourut++;
+			$unik	= $prefix.sprintf("%03s", $nourut).$kunci;
+			return $unik;
+		}
+
 		function terbilang($kata){
 			$data	= new Data;
 			$ambil 	= array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");

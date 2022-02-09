@@ -24,8 +24,8 @@
 				$outlet	= $secu->injection($_POST['outlet']);
 				$invoice= $secu->injection($_POST['invoice']);
 				$pecah	= explode("/", $invoice);
-				$gabung	= '/SJDNS/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
-				$gobong	= '/FKTDNS/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
+				$gabung	= '/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
+				$gobong	= '/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
 				$kode	= $invoice;
 				$nofak	= $secu->injection($_POST['nomorfaktur']);
 				$tglfak	= $secu->injection($_POST['tglfaktur']);
@@ -64,7 +64,7 @@
 						$mcek->execute();
 						$hcek	= $mcek->fetch(PDO::FETCH_ASSOC);
 						if (is_array($hcek)) {
-							array_push($msgBugs, "ID Faktur tidak dapat diproses!");
+							array_push($msgBugs, "ID Donasi tidak dapat diproses!");
 						}
 					} catch (PDOException $e) {
 						array_push($msgBugs, $e->getMessage());

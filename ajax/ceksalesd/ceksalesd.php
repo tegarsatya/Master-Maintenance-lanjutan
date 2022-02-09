@@ -16,10 +16,10 @@
 	$read->bindParam(':kode', $kode, PDO::PARAM_STR);
 	$read->execute();
 	$view	= $read->fetch(PDO::FETCH_ASSOC);
-	$gabung	= '/SJDNS/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
-	$gobong	= '/FKTDNS/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
-	$inv	= $data->transcode($gabung, 'sj_tfk', 'transaksi_faktur_d');
-	$fak	= $data->transcode($gobong, 'kode_tfk', 'transaksi_faktur_d');
+	$gabung	= '/'.$data->romawi(date('m')).'/'.date('y');
+	$gobong	= '/'.$data->romawi(date('m')).'/'.date('y');
+	$inv	= $data->transcodedn($gabung, 'sj_tfk', 'transaksi_faktur_d');
+	$fak	= $data->transcodedn($gobong, 'kode_tfk', 'transaksi_faktur_d');
 	$limit	= date("Y-m-d", strtotime("+$view[top_odi] Days", strtotime($catat)));
 	$conn	= $base->close();
 	$json	= array("koout" => $inv, "fkout" => $fak, "minorder" => $view['parameter_odi'], "diskon1" => $view['diskon1_odi'], "diskon2" => $view['diskon2_odi'], "jatuhtempo" => $limit);

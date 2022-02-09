@@ -41,7 +41,7 @@
 		while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
 			$no++; 
 			$status	= ($hasil['status_tfk']=='Tagihan') ? 'Belum Bayar' : (($hasil['status_tfk']=='Bayar') ? 'Pembayaran Sebagian' : 'Lunas');
-			$tabel	.= '<tr><td><center>'.$no.'</center></td><td><center>'.$hasil['tglpo_tfk'].'</center></td><td>'.$hasil['po_tfk'].'</td><td><center>'.$hasil['tgl_tfk'].'</center></td><td>'.$hasil['kode_tfk'].'</td><td>'.$hasil['nama_out'].'</td><td>'.$hasil['ofcode_out'].'</td><td>'.$hasil['nama_pro'].'</td><td>'.$hasil['kode_pro'].'</td><td>'.$hasil['no_bcode'].'</td><td>'.$hasil['tgl_expired'].'</td><td>'.$data->angka($hasil['jumlah_tfd']).'</td><td>'.$data->angka($hasil['harga_tfd']).'</td><td>'.$hasil['diskon_tfd'].'</td><td>'.$data->angka($hasil['total_tfd']).'</td><td><center>'.$hasil['tgl_limit'].'</center></td><td><center>'.$hasil['jarak'].'</center></td><td><center>'.$status.'</center></td></tr>';
+			$tabel	.= '<tr><td><center>'.$no.'</center></td><td><center>'.$hasil['tglpo_tfk'].'</center></td><td>'.$hasil['po_tfk'].'</td><td><center>'.$hasil['tgl_tfk'].'</center></td><td>'.$hasil['kode_tfk'].'</td><td>'.$hasil['nama_out'].'</td><td>'.$hasil['ofcode_out'].'</td><td>'.$hasil['nama_pro'].'</td><td>'.$hasil['kode_pro'].'</td><td>'.$hasil['no_bcode'].'</td><td>'.$hasil['tgl_expired'].'</td><td>'.$data->angka($hasil['jumlah_tfd']).'</td><td>'.$data->angka($hasil['harga_tfd']).'</td><td>'.$hasil['diskon_tfd'].'</td><td>'.$data->angka($hasil['total_tfd']).'</td></tr>';
 		}
 		$navi	= $paging->myPaging($menu, $jumlah['total'], $maxi, $page); 
 	}

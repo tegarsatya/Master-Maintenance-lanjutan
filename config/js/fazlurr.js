@@ -1530,7 +1530,7 @@ function hitungsalesd(nomor){
 	var ppn		= Math.round(((stotal * 10) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(pjumlah==0 || pjumlah==''){
-		swal("Error", "Jumlah order tidak boleh kosong...", "error");
+		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
 		$("#pjumlah"+nomor).val(1);
 	} else {
 		if(parseInt(pjumlah)>parseInt(stok)){
@@ -1582,11 +1582,11 @@ function jumlahsalesd(nomor){
 			$("#pjumlah"+nomor).val(1);
 		} else {
 			if(pjumlah==0 || pjumlah==''){
-				swal("Error", "Jumlah order tidak boleh kosong...", "error");
+				swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
 				$("#pjumlah"+nomor).val(1);
 			} else {
 				if(parseInt(pjumlah)>parseInt(stok)){
-					swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+					swal("Error", "Jumlah Donasi melebihi jumlah stok...", "error");
 					$("#pjumlah"+nomor).val(1);
 				}
 			}

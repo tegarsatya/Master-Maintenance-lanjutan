@@ -19,8 +19,8 @@
 	$read->bindParam(':kode', $kode, PDO::PARAM_STR);
 	$read->execute();
 	$view	= $read->fetch(PDO::FETCH_ASSOC);
-	$gabung	= '/FKT/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
-	$faktur	= $data->transcode($gabung, 'kode_tfk', 'transaksi_faktur_d');
+	$gabung	= '/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
+	$faktur	= $data->transcodedn($gabung, 'kode_tfk', 'transaksi_faktur_d');
 
 	$subtot	= 0;
 	$total	= 0;

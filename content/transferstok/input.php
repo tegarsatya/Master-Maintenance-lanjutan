@@ -12,9 +12,10 @@
     </div>
 </div>
 <?php
-	$unik	= "/TTS/".$data->romawi(date('m')).'/'.date('y');
-	$kode	= $data->transcode($unik, "kode_ttr", "transaksi_transferstock");
-    $apls   = $data->get_apl();
+        $unik	= "/".$data->romawi(date('m')).'/'.date('Y');
+        $kode	= $data->transcodetf($unik, "kode_ttr", "transaksi_transferstock");
+        $apls   = $data->get_apl();
+
 ?>
 <div class="content-body">
     <div class="component-section no-code">

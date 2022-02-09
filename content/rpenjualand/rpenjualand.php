@@ -48,9 +48,9 @@
                     <th>Harga</th>
                     <th>Diskon</th>
                     <th>Total</th>
-                    <th><center>Jatuh Tempo</center></th>
-                    <th><center>Remaining</center></th>
-                    <th><center>Status</center></th>
+                    <!-- <th><center>Jatuh Tempo</center></th> -->
+                    <!-- <th><center>Remaining</center></th> -->
+                    <!-- <th><center>Status</center></th> -->
                 </tr>
             </thead>
             <tbody id="isitabel"></tbody>
