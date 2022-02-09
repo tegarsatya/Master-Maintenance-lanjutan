@@ -175,6 +175,12 @@
     RewriteRule ^fsalesd/v/(.*)$ sistem.php?menu=vfsalesd&keycode=$1 [L]
     RewriteRule ^rpenjualand$ sistem.php?menu=rpenjualand [L]
     RewriteRule ^rpenjualand/cari=(.*)$ sistem.php?menu=rpenjualand&cari=$1 [L]
+    RewriteRule ^fsalesp$ sistem.php?menu=fsalesp [L]
+    RewriteRule ^fsalesp/cari=(.*)$ sistem.php?menu=fsalesp&cari=$1 [L]
+    RewriteRule ^fsalesp/i$ sistem.php?menu=ifsalesp [L]
+    RewriteRule ^itemsalesp/(.*)$ sistem.php?menu=itemsalesp&keycode=$1 [L]
+    RewriteRule ^fsalesp/e/(.*)$ sistem.php?menu=efsalesp&keycode=$1 [L]
+    RewriteRule ^fsalesp/v/(.*)$ sistem.php?menu=vfsalesp&keycode=$1 [L]
 
 	ErrorDocument 404 http://localhost/erp/error.php
 	RewriteCond %{QUERY_STRING} .

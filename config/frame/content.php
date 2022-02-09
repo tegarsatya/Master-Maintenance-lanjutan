@@ -270,6 +270,18 @@
 		case "rpenjualand":
 			require_once("content/rpenjualand/rpenjualand.php");
 		break;
+
+		case "fsalesp":
+			require_once("content/fsalesp/fsales.php");
+		break;
+		case "ifsalesp":
+			require_once("content/fsalesp/input.php");
+		break;
+		case "itemsalesp":
+			require_once("content/fsalesp/item.php");
+		break;
+		case "efsalesp":
+			require_once("content/fsalesp/edit.php");
 	
 	}
 ?>
