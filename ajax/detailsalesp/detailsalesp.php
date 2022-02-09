@@ -20,7 +20,7 @@
 	$read->execute();
 	$view	= $read->fetch(PDO::FETCH_ASSOC);
 	$gabung	= '/'.$data->romawi(date('m')).'/'.date('y');
-	$faktur	= $data->transcodedn($gabung, 'kode_tfk', 'transaksi_faktur_p');
+	$faktur	= $data->transcodepm($gabung, 'kode_tfk', 'transaksi_faktur_p');
 
 	$subtot	= 0;
 	$total	= 0;

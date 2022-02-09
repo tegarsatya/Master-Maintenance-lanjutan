@@ -15,7 +15,7 @@
 ?>
 	<link href="<?php echo("$sistem/DataTables/datatables.min.css"); ?>" rel="stylesheet" />
     <div class="modal-header">
-        <h6 class="modal-title" id="exampleModalLabel">Search Product <?php echo $cart; ?></h6>
+        <h6 class="modal-title" id="exampleModalLabel">Search Product Pinajaman <?php echo $cart; ?></h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
         </button>
