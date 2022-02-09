@@ -24,12 +24,12 @@
         <input type="hidden" name="keycode" value="<?php echo(base64_encode('FAK'.time())); ?>" readonly="readonly" />
         <div class="row row-sm">
             <div class="col-sm-3">
-                <label>Nomor SJ Donasi <span class="tx-danger">*</span></label>
+                <label>Nomor SJ Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="invoice" id="koout" class="form-control" placeholder="-" />
             </div>
             <div class="col-sm-3">
                 <label>Outlet <span class="tx-danger">*</span></label>
-				<select name="outlet" id="outlet" class="form-control select2" onchange="ceksalesd()" required="required">
+				<select name="outlet" id="outlet" class="form-control select2" onchange="ceksalesp()" required="required">
                 	<option value="">-- Pilih --</option>
 				<?php
 					$status	= 'Active';
@@ -43,23 +43,23 @@
                 </select>
             </div>
             <div class="col-sm-3">
-                <label>Nomor Faktur Donasi <span class="tx-danger">*</span></label>
+                <label>Nomor Faktur Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="nomorfaktur" id="fkout" class="form-control" placeholder="Ketik nomor Faktur Donasi di sini Gaess..." />
             </div>
             <div class="col-sm-3">
-                <label>Tanggal Donasi <span class="tx-danger">*</span></label>
+                <label>Tanggal Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="tglfaktur" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
             </div>
             <div class="col-sm-3 mg-t-10">
-                <label>Tanggal SJ Donasi <span class="tx-danger">*</span></label>
+                <label>Tanggal SJ Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="tglsales" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
             </div>
             <div class="col-sm-3 mg-t-10">
-                <label>Nomor Donasi <span class="tx-danger">*</span></label>
+                <label>Nomor Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="nomorpo" class="form-control" placeholder="Ketik nomor donasi di sini..." />
             </div>
             <div class="col-sm-3 mg-t-10">
-                <label>Tanggal Donasi <span class="tx-danger">*</span></label>
+                <label>Tanggal Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="tglpo" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
             </div>
             <div class="col-sm-3 mg-t-10">

@@ -34,7 +34,7 @@
 				$tglsj	= $secu->injection($_POST['tglsales']);
 				$jatuh	= $secu->injection($_POST['jatuhtempo']);
 				$status	= 'Faktur';
-				$processTitle	= 'Tambah Faktur '.$nofak;
+				$processTitle	= 'Tambah Faktur Penerimaan'.$nofak;
 				// refresh no invoice, faktur & checking no po
 				try {
 					$qRead = "SELECT * 
@@ -170,7 +170,7 @@
 				$ppn	= str_replace('.', '', $_POST['pppn']);
 				$nofak	= $secu->injection($_POST['nomorfaktur']);
 				$status	= 'Tagihan';
-				$processTitle	= 'Tambah Item Faktur '.$nofak;
+				$processTitle	= 'Tambah Item Faktur Pinjaman'.$nofak;
 				$jum	= count($_POST['kodestok']);
 				$no		= 0;
 				while($no<$jum){
@@ -270,9 +270,9 @@
 				$nopo	= $secu->injection($_POST['nomorpo']);
 				$tglpo	= $secu->injection($_POST['tglpo']);
 				$jatuh	= $secu->injection($_POST['jatuhtempo']);
-				$processTitle	= 'Update Faktur  '.$nofak;
+				$processTitle	= 'Update Faktur Pinjaman  '.$nofak;
 				try {
-					$edit	= $conn->prepare("UPDATE transaksi_faktur_d SET kode_tfk=:nofak, tgl_tfk=:tglfak, sj_tfk=:nosj, tglsj_tfk=:tglsj, po_tfk=:nopo, tglpo_tfk=:tglpo, tgl_limit=:jatuh, updated_at=:catat, updated_by=:admin WHERE id_tfk=:kode");
+					$edit	= $conn->prepare("UPDATE transaksi_faktur_p SET kode_tfk=:nofak, tgl_tfk=:tglfak, sj_tfk=:nosj, tglsj_tfk=:tglsj, po_tfk=:nopo, tglpo_tfk=:tglpo, tgl_limit=:jatuh, updated_at=:catat, updated_by=:admin WHERE id_tfk=:kode");
 					$edit->bindParam(':kode', $kode, PDO::PARAM_STR);
 					$edit->bindParam(':nofak', $nofak, PDO::PARAM_STR);
 					$edit->bindParam(':tglfak', $tglfak, PDO::PARAM_STR);
@@ -335,7 +335,7 @@
 				*/
 				if (empty($msgBugs)) {
 					try {
-						$remove	= $conn->prepare("DELETE A, B, C FROM transaksi_faktur_d AS A LEFT JOIN transaksi_fakturdetail_p AS B ON A.id_tfk=B.id_tfk LEFT JOIN pembayaran_faktur AS C ON A.id_tfk=C.id_tfk WHERE A.id_tfk=:kode");
+						$remove	= $conn->prepare("DELETE A, B, C FROM transaksi_faktur_p AS A LEFT JOIN transaksi_fakturdetail_p AS B ON A.id_tfk=B.id_tfk LEFT JOIN pembayaran_faktur AS C ON A.id_tfk=C.id_tfk WHERE A.id_tfk=:kode");
 						$remove->bindParam(':kode', $kode, PDO::PARAM_STR);
 						$remove->execute();
 					} catch (PDOException $e) {

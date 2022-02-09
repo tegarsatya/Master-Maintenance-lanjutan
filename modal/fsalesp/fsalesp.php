@@ -22,7 +22,7 @@
                 <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
             </button>
         </div>
-        <form id="formsalespnpd" action="#" method="post" autocomplete="off">
+        <form id="formsalespnpp" action="#" method="post" autocomplete="off">
         <input type="hidden" name="namamodal" id="namamodal" value="fsalesp" readonly="readonly" />
         <input type="hidden" name="namamenu" value="update" readonly="readonly" />
         <input type="hidden" name="keycode" value="<?php echo($kode); ?>" readonly="readonly" />
@@ -111,7 +111,7 @@
                 <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
             </button>
         </div>
-        <form id="formsalespnpd" action="#" method="post" autocomplete="off">
+        <form id="formsalespnpp" action="#" method="post" autocomplete="off">
         <input type="hidden" name="namamodal" id="namamodal" value="fsalesp" readonly="readonly" />
         <input type="hidden" name="namamenu" value="delete" readonly="readonly" />
         <input type="hidden" name="keycode" value="<?php echo($kode); ?>" readonly="readonly" />

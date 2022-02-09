@@ -34,7 +34,7 @@
 				$tglsj	= $secu->injection($_POST['tglsales']);
 				$jatuh	= $secu->injection($_POST['jatuhtempo']);
 				$status	= 'Faktur';
-				$processTitle	= 'Tambah Faktur '.$nofak;
+				$processTitle	= 'Tambah Faktur Donasi '.$nofak;
 				// refresh no invoice, faktur & checking no po
 				try {
 					$qRead = "SELECT * 
@@ -49,7 +49,7 @@
 					$read->execute();
 					$dRead  = $read->fetch(PDO::FETCH_ASSOC);
                     if (is_array($dRead)) {
-						array_push($msgBugs, "Nomor PO ".$nomorpo." atau Nomor Donasi sudah pernah digunakan!");
+						array_push($msgBugs, "Nomor Donasi ".$nomorpo." atau Nomor Donasi sudah pernah digunakan!");
 					}
 				} catch (PDOException $e) {
 					array_push($msgBugs, $e->getMessage());
@@ -270,7 +270,7 @@
 				$nopo	= $secu->injection($_POST['nomorpo']);
 				$tglpo	= $secu->injection($_POST['tglpo']);
 				$jatuh	= $secu->injection($_POST['jatuhtempo']);
-				$processTitle	= 'Update Faktur  '.$nofak;
+				$processTitle	= 'Update Faktur Donasi '.$nofak;
 				try {
 					$edit	= $conn->prepare("UPDATE transaksi_faktur_d SET kode_tfk=:nofak, tgl_tfk=:tglfak, sj_tfk=:nosj, tglsj_tfk=:tglsj, po_tfk=:nopo, tglpo_tfk=:tglpo, tgl_limit=:jatuh, updated_at=:catat, updated_by=:admin WHERE id_tfk=:kode");
 					$edit->bindParam(':kode', $kode, PDO::PARAM_STR);
