@@ -4,10 +4,10 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Pinjaman</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Faktur Pinajaman</li>
+                <li class="breadcrumb-item active" aria-current="page">Faktur Pinjaman</li>
             </ol>
         </nav>
-        <h4 class="content-title">Input Data - Faktur Pinajman</h4>
+        <h4 class="content-title">Input Data - Faktur Pinjaman</h4>
     </div>
 </div>
 <div class="content-body">

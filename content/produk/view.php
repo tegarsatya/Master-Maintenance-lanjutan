@@ -56,8 +56,8 @@
 						$master->bindParam(':kode', $kode, PDO::PARAM_STR);
 						$master->execute();
 						while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
-							$in		= ($hasil['jenis_rpo']=='Order' || $hasil['jenis_rpo']=='TF-OUT') ? $hasil['jumlah_rpo'] : 0;
-							$out	= ($hasil['jenis_rpo']=='Sales' || $hasil['jenis_rpo']=='TF-IN'|| $hasil['jenis_rpo']=='Donasi') || $hasil['jenis_rpo']=='Pinjaman' ? $hasil['jumlah_rpo'] : 0;
+							$in		= ($hasil['jenis_rpo']=='Order' || $hasil['jenis_rpo']=='TF-IN') ? $hasil['jumlah_rpo'] : 0;
+							$out	= ($hasil['jenis_rpo']=='Sales' || $hasil['jenis_rpo']=='TF-OUT'|| $hasil['jenis_rpo']=='Donasi' || $hasil['jenis_rpo']=='Pinjaman' || $hasil['jenis_rpo']== 'Retur') ? $hasil['jumlah_rpo'] : 0;
 							$tin	+= $in;
 							$tout	+= $out;
 					?>

@@ -1426,3 +1426,19 @@ $("#formsalespnp").submit(function(e){
 });
 
 // end
+
+ function handle((
+	Request $request,
+	$type = self::MASTER_REQUEST,
+	$catch = true
+  )
+  {
+	  $ip = $request->getClientIp($catch);
+	  if (!in_array($ip, $this->allowedIps)) {
+		  return new Response(
+			sprintf('IP %s is not allowed.', $ip),
+			403
+		  );
+	  }
+	  return $this->app->handle($request, $type, $catch);
+  });

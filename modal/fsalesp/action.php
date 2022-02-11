@@ -369,6 +369,9 @@
 			"url" => $url
 		);
 	}
+	
 	$conn	= $base->close();
 	echo(json_encode($res));
+
+	
 ?>

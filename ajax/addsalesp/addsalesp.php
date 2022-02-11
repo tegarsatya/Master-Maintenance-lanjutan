@@ -38,7 +38,7 @@
 	<td><input type="text" name="total[]" id="<?php echo("ptotal$nomor"); ?>" class="inputtotal" onkeyup="angka(this)" placeholder="0" readonly="readonly" /></td>
     <td>
     <center>
-    	<a onclick="<?php echo("delsales($nomor)"); ?>"><span class="badge badge-danger"><i class="fa fa-times-circle"></i></span></a>
+    	<a onclick="<?php echo("delsalesp($nomor)"); ?>"><span class="badge badge-danger"><i class="fa fa-times-circle"></i></span></a>
 	</center>
 	</td>
 </tr>
