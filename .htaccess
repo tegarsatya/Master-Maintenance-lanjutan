@@ -181,8 +181,15 @@
     RewriteRule ^itemsalesp/(.*)$ sistem.php?menu=itemsalesp&keycode=$1 [L]
     RewriteRule ^fsalesp/e/(.*)$ sistem.php?menu=efsalesp&keycode=$1 [L]
     RewriteRule ^fsalesp/v/(.*)$ sistem.php?menu=vfsalesp&keycode=$1 [L]
+    RewriteRule ^fsalesr$ sistem.php?menu=fsalesr [L]
+    RewriteRule ^fsalesr/cari=(.*)$ sistem.php?menu=fsalesr&cari=$1 [L]
+    RewriteRule ^fsalesr/i$ sistem.php?menu=ifsalesr [L]
+    RewriteRule ^itemsalesr/(.*)$ sistem.php?menu=itemsalesr&keycode=$1 [L]
+    RewriteRule ^fsalesr/e/(.*)$ sistem.php?menu=efsalesr&keycode=$1 [L]
+    RewriteRule ^fsalesr/v/(.*)$ sistem.php?menu=vfsalesr&keycode=$1 [L]
 
-	ErrorDocument 404 http://localhost/erp/error.php
+    
+	ErrorDocument 404 http://127.0.0.1/maintenance-lanjutan/error.php
 	RewriteCond %{QUERY_STRING} .
 	RewriteRule ^$ /? [R,L]
     Options All -Indexes

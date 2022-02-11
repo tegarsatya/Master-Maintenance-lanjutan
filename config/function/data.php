@@ -306,7 +306,7 @@
 		}
 
 		function transcodetf($kunci, $kode, $tabel) {
-			$prefix = "TRF";
+			$prefix = "TRF/";
 			$conn	= $this->open();
 			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
 			$conn	= $this->close();
@@ -319,7 +319,7 @@
 		}
 
 		function transcodedn($kunci, $kode, $tabel) {
-			$prefix = "GIV";
+			$prefix = "GIV/";
 			$conn	= $this->open();
 			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
 			$conn	= $this->close();
@@ -332,7 +332,20 @@
 		}
 
 		function transcodepm($kunci, $kode, $tabel) {
-			$prefix = "BOR";
+			$prefix = "BOR/";
+			$conn	= $this->open();
+			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
+			$conn	= $this->close();
+			$jumlah	= strlen($kunci);
+			$nourut = str_replace($prefix, "", $select['kode']);
+			$nourut = (int) str_replace($kunci, "", $select['kode']);
+			$nourut++;
+			$unik	= $prefix.sprintf("%03s", $nourut).$kunci;
+			return $unik;
+		}
+
+		function transcodert($kunci, $kode, $tabel) {
+			$prefix = "RET/";
 			$conn	= $this->open();
 			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
 			$conn	= $this->close();
