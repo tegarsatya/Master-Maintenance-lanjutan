@@ -1635,7 +1635,7 @@ function ceksalesd(){
 			$("#minorder").val(json.minorder);
 			$("#diskon1").val(json.diskon1);
 			$("#diskon2").val(json.diskon2);
-			$("#jatuhtempo").val(json.jatuhtempo);
+			// $("#jatuhtempo").val(json.jatuhtempo);
 			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
 		},
 		error: function(data){ swal("Error", "Proses data error...", "error"); },
@@ -1899,7 +1899,7 @@ function ceksalesp(){
 			$("#minorder").val(json.minorder);
 			$("#diskon1").val(json.diskon1);
 			$("#diskon2").val(json.diskon2);
-			$("#jatuhtempo").val(json.jatuhtempo);
+			// $("#jatuhtempo").val(json.jatuhtempo);
 			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
 		},
 		error: function(data){ swal("Error", "Proses data error...", "error"); },

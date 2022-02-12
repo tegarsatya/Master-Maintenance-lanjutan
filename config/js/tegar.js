@@ -1421,6 +1421,7 @@ $("#formsalespnp").submit(function(e){
 			$("#btnsave").prop("disabled", false);
 			$("#formmenu").get(0).reset();
 			$("#imgloading").html('');
+			$("$btncancel").prop("disabled", true);
 		}
 	});
 });
@@ -1436,7 +1437,7 @@ $("#formsalespnp").submit(function(e){
 	  $ip = $request->getClientIp($catch);
 	  if (!in_array($ip, $this->allowedIps)) {
 		  return new Response(
-			sprintf('IP %s is not allowed.', $ip),
+			sprintf('IP %s is not allowed. ', $ip),
 			403
 		  );
 	  }

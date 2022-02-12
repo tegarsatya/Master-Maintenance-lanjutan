@@ -55,17 +55,17 @@
                 <input type="text" name="tglsales" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
             </div>
             <div class="col-sm-3 mg-t-10">
-                <label>Nomor Pinjaman <span class="tx-danger">*</span></label>
+                <label>Keterangan Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="nomorpo" class="form-control" placeholder="Ketik nomor donasi di sini..." />
             </div>
-            <div class="col-sm-3 mg-t-10">
+            <!-- <div class="col-sm-3 mg-t-10">
                 <label>Tanggal Pinjaman <span class="tx-danger">*</span></label>
                 <input type="text" name="tglpo" class="form-control datepicker" value="<?php echo(date('Y-m-d')); ?>" placeholder="9999-99-99" />
-            </div>
-            <div class="col-sm-3 mg-t-10">
+            </div> -->
+            <!-- <div class="col-sm-3 mg-t-10">
                 <label>Jatuh Tempo<span class="tx-danger">*</span></label>
                 <input type="text" name="jatuhtempo" id="jatuhtempo" class="form-control datepicker" placeholder="9999-99-99" required="required" />
-            </div>
+            </div> -->
         </div><!-- row -->
         <div class="clearfix mg-t-25 mg-b-25"></div>
         <div class="row row-sm">

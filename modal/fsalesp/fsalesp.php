@@ -29,40 +29,40 @@
         <div class="modal-body">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label>Nomor Faktur <span class="tx-danger">*</span></label>
+                    <label>Nomor Faktur Peminjaman <span class="tx-danger">*</span></label>
                     <input type="text" name="nomorfaktur" class="form-control" value="<?php echo($view['kode_tfk']); ?>" placeholder="Type here..." required="required" />
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Tgl. Faktur <span class="tx-danger">*</span></label>
+                    <label>Tgl. Peminjaman <span class="tx-danger">*</span></label>
                     <input type="text" name="tglfak" class="form-control fortgl" value="<?php echo($view['tgl_tfk']); ?>" placeholder="9999-99-99" required="required" />
                 </div>
 			</div>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label>Nomor SJ <span class="tx-danger">*</span></label>
+                    <label>Nomor Peminjaman <span class="tx-danger">*</span></label>
                     <input type="text" name="nomorsj" class="form-control" value="<?php echo($view['sj_tfk']); ?>" placeholder="Type here..." required="required" />
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Tgl. SJ <span class="tx-danger">*</span></label>
+                    <label>Tgl. Pinjaman <span class="tx-danger">*</span></label>
                     <input type="text" name="tglsj" class="form-control fortgl" value="<?php echo($view['tglsj_tfk']); ?>" placeholder="9999-99-99" required="required" />
                 </div>
 			</div>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label>Nomor PO <span class="tx-danger">*</span></label>
+                    <label>Keterangan Pinjaman <span class="tx-danger">*</span></label>
                     <input type="text" name="nomorpo" class="form-control" value="<?php echo($view['po_tfk']); ?>" placeholder="Type here..." required="required" />
                 </div>
-                <div class="form-group col-md-6">
+                <!-- <div class="form-group col-md-6">
                     <label>Tgl. PO <span class="tx-danger">*</span></label>
                     <input type="text" name="tglpo" class="form-control fortgl" value="<?php echo($view['tglpo_tfk']); ?>" placeholder="9999-99-99" required="required" />
-                </div>
+                </div> -->
 			</div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="form-group col-md-6">
                     <label>Jatuh Tempo<span class="tx-danger">*</span></label>
                     <input type="text" name="jatuhtempo" class="form-control fortgl" value="<?php echo($view['tgl_limit']); ?>" placeholder="9999-99-99" required="required" />
                 </div>
-			</div>
+			</div> -->
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>

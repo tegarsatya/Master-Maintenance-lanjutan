@@ -30,9 +30,9 @@
 				$nofak	= $secu->injection($_POST['nomorfaktur']);
 				$tglfak	= $secu->injection($_POST['tglfaktur']);
 				$nomorpo= $secu->injection($_POST['nomorpo']);
-				$tglpo	= $secu->injection($_POST['tglpo']);
+				// $tglpo	= $secu->injection($_POST['tglpo']);
 				$tglsj	= $secu->injection($_POST['tglsales']);
-				$jatuh	= $secu->injection($_POST['jatuhtempo']);
+				// $jatuh	= $secu->injection($_POST['jatuhtempo']);
 				$status	= 'Faktur';
 				$processTitle	= 'Tambah Faktur Donasi '.$nofak;
 				// refresh no invoice, faktur & checking no po
@@ -79,10 +79,8 @@
 											sj_tfk,
 											tglsj_tfk,
 											po_tfk,
-											tglpo_tfk,
 											kode_tfk,
 											tgl_tfk,
-											tgl_limit,
 											subtot_tfk,
 											ppn_tfk,
 											total_tfk,
@@ -99,10 +97,8 @@
 										:kode, 
 										:tglsj, 
 										:nomorpo, 
-										:tglpo, 
 										:nofak, 
 										:tglfak, 
-										:jatuh,
 										:id, 
 										:id, 
 										:id, 
@@ -119,10 +115,10 @@
 							$save->bindParam(':kode', $kode, PDO::PARAM_STR);
 							$save->bindParam(':tglsj', $tglsj, PDO::PARAM_STR);
 							$save->bindParam(':nomorpo', $nomorpo, PDO::PARAM_STR);
-							$save->bindParam(':tglpo', $tglpo, PDO::PARAM_STR);
+							// $save->bindParam(':tglpo', $tglpo, PDO::PARAM_STR);
 							$save->bindParam(':nofak', $nofak, PDO::PARAM_STR);
 							$save->bindParam(':tglfak', $tglfak, PDO::PARAM_STR);
-							$save->bindParam(':jatuh', $jatuh, PDO::PARAM_STR);
+							// $save->bindParam(':jatuh', $jatuh, PDO::PARAM_STR);
 							$save->bindParam(':stotal', $stotal, PDO::PARAM_STR);
 							$save->bindParam(':ppn', $ppn, PDO::PARAM_STR);
 							$save->bindParam(':gtotal', $gtotal, PDO::PARAM_STR);
@@ -268,19 +264,19 @@
 				$nosj	= $secu->injection($_POST['nomorsj']);
 				$tglsj	= $secu->injection($_POST['tglsj']);
 				$nopo	= $secu->injection($_POST['nomorpo']);
-				$tglpo	= $secu->injection($_POST['tglpo']);
-				$jatuh	= $secu->injection($_POST['jatuhtempo']);
+				// $tglpo	= $secu->injection($_POST['tglpo']);
+				// $jatuh	= $secu->injection($_POST['jatuhtempo']);
 				$processTitle	= 'Update Faktur Donasi '.$nofak;
 				try {
-					$edit	= $conn->prepare("UPDATE transaksi_faktur_d SET kode_tfk=:nofak, tgl_tfk=:tglfak, sj_tfk=:nosj, tglsj_tfk=:tglsj, po_tfk=:nopo, tglpo_tfk=:tglpo, tgl_limit=:jatuh, updated_at=:catat, updated_by=:admin WHERE id_tfk=:kode");
+					$edit	= $conn->prepare("UPDATE transaksi_faktur_d SET kode_tfk=:nofak, tgl_tfk=:tglfak, sj_tfk=:nosj, tglsj_tfk=:tglsj, po_tfk=:nopo, updated_at=:catat, updated_by=:admin WHERE id_tfk=:kode");
 					$edit->bindParam(':kode', $kode, PDO::PARAM_STR);
 					$edit->bindParam(':nofak', $nofak, PDO::PARAM_STR);
 					$edit->bindParam(':tglfak', $tglfak, PDO::PARAM_STR);
 					$edit->bindParam(':nosj', $nosj, PDO::PARAM_STR);
 					$edit->bindParam(':tglsj', $tglsj, PDO::PARAM_STR);
 					$edit->bindParam(':nopo', $nopo, PDO::PARAM_STR);
-					$edit->bindParam(':tglpo', $tglpo, PDO::PARAM_STR);
-					$edit->bindParam(':jatuh', $jatuh, PDO::PARAM_STR);
+					// $edit->bindParam(':tglpo', $tglpo, PDO::PARAM_STR);
+					// $edit->bindParam(':jatuh', $jatuh, PDO::PARAM_STR);
 					$edit->bindParam(':catat', $catat, PDO::PARAM_STR);
 					$edit->bindParam(':admin', $admin, PDO::PARAM_STR);
 					$edit->execute();

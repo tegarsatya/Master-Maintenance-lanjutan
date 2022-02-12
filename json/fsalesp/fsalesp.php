@@ -47,7 +47,6 @@
 						A.sj_tfk,
 						A.tglsj_tfk,
 						A.po_tfk,
-						A.tglpo_tfk,
 						A.kode_tfk,
 						A.tgl_tfk,
 						A.total_tfk,
@@ -79,7 +78,7 @@
 			// $tf		= ($data->akses($admin, $menu, 'A.tf_status')==='Active') ? ' <a href="#modal1" onclick="crud()" data-toggle="modal"><span class="badge badge-danger"><i class="fa fa-tags"></i></span></a>' : '';
 			$delete	= ($data->akses($admin, $menu, 'A.delete_status')==='Active' && in_array($hasil['status_tfk'],array('Faktur','Tagihan'))) ? ' <a href="#modal1" onclick="crud(\'fsalesp\', \'delete\', \''.$hasil['id_tfk'].'\')" data-toggle="modal"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>' : '';
 			$status	= ($hasil['status_tfk']=='Tagihan') ? 'Belum Bayar' : (($hasil['status_tfk']=='Bayar') ? 'Pembayaran Sebagian' : 'Lunas');
-			$tabel	.= '<tr><td><center>'.$no.'</center></td><td>'.$hasil['kode_tfk'].'</td><td>'.$hasil['nama_out'].'</td><td><center>'.$hasil['tgl_tfk'].'</center></td><td>'.$hasil['sj_tfk'].'</td><td><center>'.$hasil['tglsj_tfk'].'</center></td><td>'.$hasil['po_tfk'].'</td><td><center>'.$hasil['tglpo_tfk'].'</center></td><td><div align="right">'.$data->angka($hasil['total_tfk']).'</div></td><td><center>'.$view.'</center></td><td><center>'.$item.$edit.$delete.'</center></td></tr>';
+			$tabel	.= '<tr><td><center>'.$no.'</center></td><td>'.$hasil['kode_tfk'].'</td><td>'.$hasil['nama_out'].'</td><td><center>'.$hasil['tgl_tfk'].'</center></td><td>'.$hasil['sj_tfk'].'</td><td><center>'.$hasil['tglsj_tfk'].'</center></td><td>'.$hasil['po_tfk'].'</td><td><div align="right">'.$data->angka($hasil['total_tfk']).'</div></td><td><center>'.$view.'</center></td><td><center>'.$item.$edit.$delete.'</center></td></tr>';
 		}
 		$navi	= $paging->myPaging($menu, $jumlah['total'], $maxi, $page); 
 	}

@@ -36,8 +36,7 @@
                     <th><center>Tgl. Pinjaman</center></th>
                     <th>Nomor SJ Pinjaman</th>
                     <th><center>Tgl. SJ Pinjaman</center></th>
-                    <th>Nomor Pinjaman</th>
-                    <th><center>Tgl Pinajaman</center></th>
+                    <th>Keterangan Pinjaman</th>
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>
                     <th><center>Action</center></th>

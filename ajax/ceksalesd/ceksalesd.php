@@ -22,7 +22,7 @@
 	$fak	= $data->transcodedn($gobong, 'kode_tfk', 'transaksi_faktur_d');
 	$limit	= date("Y-m-d", strtotime("+$view[top_odi] Days", strtotime($catat)));
 	$conn	= $base->close();
-	$json	= array("koout" => $inv, "fkout" => $fak, "minorder" => $view['parameter_odi'], "diskon1" => $view['diskon1_odi'], "diskon2" => $view['diskon2_odi'], "jatuhtempo" => $limit);
+	$json	= array("koout" => $inv, "fkout" => $fak, "minorder" => $view['parameter_odi'], "diskon1" => $view['diskon1_odi'], "diskon2" => $view['diskon2_odi']);
 	http_response_code(200);
 	header('Access-Control-Allow-Origin: *');
 	header("Content-type: application/json; charset=utf-8");

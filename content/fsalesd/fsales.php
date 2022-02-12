@@ -36,8 +36,8 @@
                     <th><center>Tgl. Donasi</center></th>
                     <th>Nomor SJ Donasi</th>
                     <th><center>Tgl. SJ Donasi</center></th>
-                    <th>Nomor Donasi</th>
-                    <th><center>Tgl Donasi</center></th>
+                    <th>Keterangan Donasi</th>
+                    <!-- <th><center>Tgl Donasi</center></th> -->
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>
                     <th><center>Action</center></th>
