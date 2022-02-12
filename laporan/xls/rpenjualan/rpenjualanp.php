@@ -28,14 +28,14 @@
 ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Report Donasi</title>
+        <title>Report Pinjaman</title>
     </head>
 
 
     <body>
 		<table>
         	<tr>
-            	<th colspan="18">REPORT DONASI</th>
+            	<th colspan="18">REPORT PINJAMAN</th>
             </tr>
             <tr>
             	<td colspan="18"></td>
@@ -46,7 +46,7 @@
                 <tr>
                     <th><center>#</center></th>
                     <th><center>Tgl. Keterangan</center></th>
-                    <th> Keterangan Donasi</th>
+                    <th> Keterangan Pinjaman</th>
                     <th><center>Tgl. Faktur</center></th>
                     <th>Nomor Faktur</th>
                     <th>Outlet</th>
@@ -73,7 +73,7 @@
             <tbody>
             <?php
 				$nomor	= 1;
-				$master	= $conn->prepare("SELECT A.jumlah_tfd, A.harga_tfd, A.diskon_tfd, A.total_tfd, B.kode_tfk, B.pajak_tfk, B.pajak_tfkt, B.tgl_tfk, B.po_tfk, B.status_tfk,C.nama_pro, C.kategori_obat, C.kode_pro,C.kode_produk_jadi, D.nama_out, D.id_kot, D.ofcode_out, E.no_bcode, E.tgl_expired,F.pengiriman_ola FROM transaksi_fakturdetail_d AS A LEFT JOIN transaksi_faktur_d AS B ON A.id_tfk=B.id_tfk LEFT JOIN produk AS C ON A.id_pro=C.id_pro LEFT JOIN outlet AS D ON B.id_out=D.id_out  LEFT JOIN produk_stokdetail AS E ON A.id_psd=E.id_psd LEFT JOIN outlet_alamat AS F ON D.id_out=F.id_out WHERE A.id_tfd!='' $outlet $produk $tgl1 $tgl2 ORDER BY B.tgl_tfk DESC, B.kode_tfk DESC");
+				$master	= $conn->prepare("SELECT A.jumlah_tfd, A.harga_tfd, A.diskon_tfd, A.total_tfd, B.kode_tfk, B.pajak_tfk, B.pajak_tfkt, B.tgl_tfk, B.po_tfk, B.status_tfk,C.nama_pro, C.kategori_obat, C.kode_pro,C.kode_produk_jadi, D.nama_out, D.id_kot, D.ofcode_out, E.no_bcode, E.tgl_expired,F.pengiriman_ola FROM transaksi_fakturdetail_p AS A LEFT JOIN transaksi_faktur_p AS B ON A.id_tfk=B.id_tfk LEFT JOIN produk AS C ON A.id_pro=C.id_pro LEFT JOIN outlet AS D ON B.id_out=D.id_out  LEFT JOIN produk_stokdetail AS E ON A.id_psd=E.id_psd LEFT JOIN outlet_alamat AS F ON D.id_out=F.id_out WHERE A.id_tfd!='' $outlet $produk $tgl1 $tgl2 ORDER BY B.tgl_tfk DESC, B.kode_tfk DESC");
 				$master->bindParam(':tanggal', $tanggal, PDO::PARAM_STR);
 				$master->execute();
 				while($hasil= $master->fetch(PDO::FETCH_ASSOC)){

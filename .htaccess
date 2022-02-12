@@ -193,6 +193,12 @@
     RewriteRule ^itemsalesl/(.*)$ sistem.php?menu=itemsalesl&keycode=$1 [L]
     RewriteRule ^fsalesl/e/(.*)$ sistem.php?menu=efsalesl&keycode=$1 [L]
     RewriteRule ^fsalesl/v/(.*)$ sistem.php?menu=vfsalesl&keycode=$1 [L]
+    RewriteRule ^rpenjualanp$ sistem.php?menu=rpenjualanp [L]
+    RewriteRule ^rpenjualanp/cari=(.*)$ sistem.php?menu=rpenjualanp&cari=$1 [L]
+    RewriteRule ^rpenjualanr$ sistem.php?menu=rpenjualanr [L]
+    RewriteRule ^rpenjualanr/cari=(.*)$ sistem.php?menu=rpenjualanr&cari=$1 [L]
+    RewriteRule ^rpenjualanl$ sistem.php?menu=rpenjualanl [L]
+    RewriteRule ^rpenjualanl/cari=(.*)$ sistem.php?menu=rpenjualanl&cari=$1 [L]
 
 
     

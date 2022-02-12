@@ -44,8 +44,8 @@
 		$jumlah	= $conn->query($qJumlah)->fetch(PDO::FETCH_ASSOC);
 		$qMaster = "SELECT
 						A.id_tfk,
-						A.sj_tfk,
-						A.tglsj_tfk,
+						-- A.sj_tfk,
+						-- A.tglsj_tfk,
 						A.po_tfk,
 						A.kode_tfk,
 						A.tgl_tfk,
@@ -72,13 +72,13 @@
 		while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
 			$no++;
 			$uniq	= base64_encode($hasil['id_tfk']);
-			$view	= ($data->akses($admin, $menu, 'A.read_status')==='Active') ? '<a target="_blank" href="'.$sistem.'/laporan/xps/faktursales/faktursales.php?key='.$hasil['id_tfk'].'" title="Cetak Faktur"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>' : '';
+			$view	= ($data->akses($admin, $menu, 'A.read_status')==='Active') ? '<a target="_blank" href="'.$sistem.'/laporan/xps/faktursales/faktursalesr.php?key='.$hasil['id_tfk'].'" title="Cetak Faktur"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>' : '';
 			$item	= ($data->akses($admin, $menu, 'A.update_status')==='Active' && $hasil['status_tfk']==='Faktur') ? '<a href="'.$sistem.'/itemsalesr/'.$uniq.'" title="Item Faktur Retur"><span class="badge badge-primary"><i class="fa fa-check"></i></span></a> ' : '';
 			$edit	= ($data->akses($admin, $menu, 'A.update_status')==='Active' && in_array($hasil['status_tfk'],array('Faktur','Tagihan'))) ? '<a href="#modal1" onclick="crud(\'fsalesr\', \'update\', \''.$hasil['id_tfk'].'\')" data-toggle="modal"><span class="badge badge-info"><i class="fa fa-edit"></i></span></a>' : '';
 			// $tf		= ($data->akses($admin, $menu, 'A.tf_status')==='Active') ? ' <a href="#modal1" onclick="crud()" data-toggle="modal"><span class="badge badge-danger"><i class="fa fa-tags"></i></span></a>' : '';
 			$delete	= ($data->akses($admin, $menu, 'A.delete_status')==='Active' && in_array($hasil['status_tfk'],array('Faktur','Tagihan'))) ? ' <a href="#modal1" onclick="crud(\'fsalesr\', \'delete\', \''.$hasil['id_tfk'].'\')" data-toggle="modal"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>' : '';
 			$status	= ($hasil['status_tfk']=='Tagihan') ? 'Belum Bayar' : (($hasil['status_tfk']=='Bayar') ? 'Pembayaran Sebagian' : 'Lunas');
-			$tabel	.= '<tr><td><center>'.$no.'</center></td><td>'.$hasil['kode_tfk'].'</td><td>'.$hasil['nama_out'].'</td><td><center>'.$hasil['tgl_tfk'].'</center></td><td>'.$hasil['sj_tfk'].'</td><td><center>'.$hasil['tglsj_tfk'].'</center></td><td>'.$hasil['po_tfk'].'</td><td><div align="right">'.$data->angka($hasil['total_tfk']).'</div></td><td><center>'.$view.'</center></td><td><center>'.$item.$edit.$delete.'</center></td></tr>';
+			$tabel	.= '<tr><td><center>'.$no.'</center></td><td>'.$hasil['kode_tfk'].'</td><td>'.$hasil['nama_out'].'</td><td><center>'.$hasil['tgl_tfk'].'</center></td><td>'.$hasil['po_tfk'].'</td><td><div align="right">'.$data->angka($hasil['total_tfk']).'</div></td><td><center>'.$view.'</center></td><td><center>'.$item.$edit.$delete.'</center></td></tr>';
 		}
 		$navi	= $paging->myPaging($menu, $jumlah['total'], $maxi, $page); 
 	}

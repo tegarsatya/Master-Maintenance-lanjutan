@@ -32,8 +32,8 @@
 		$tgl2	= empty($pecah[3]) ? "" : "AND B.tgl_tfk<='$pecah[3]'"; 
 		$tabel	= '';
 		$no		= $mulai;
-		$jumlah	= $conn->query("SELECT COUNT(A.id_tfd) AS total FROM transaksi_fakturdetail_d AS A LEFT JOIN transaksi_faktur_d AS B ON A.id_tfk=B.id_tfk WHERE A.id_tfd!='' $outlet $produk $tgl1 $tgl2")->fetch(PDO::FETCH_ASSOC);
-		$master	= $conn->prepare("SELECT A.jumlah_tfd, A.harga_tfd, A.diskon_tfd, A.total_tfd, B.kode_tfk, B.tgl_tfk, B.po_tfk,B.status_tfk, C.nama_pro, C.kode_pro, D.nama_out, D.ofcode_out, E.no_bcode, E.tgl_expired FROM transaksi_fakturdetail_d AS A LEFT JOIN transaksi_faktur_d AS B ON A.id_tfk=B.id_tfk LEFT JOIN produk AS C ON A.id_pro=C.id_pro LEFT JOIN outlet AS D ON B.id_out=D.id_out LEFT JOIN produk_stokdetail AS E ON A.id_psd=E.id_psd WHERE A.id_tfd!='' $outlet $produk $tgl1 $tgl2 ORDER BY B.tgl_tfk DESC, B.kode_tfk DESC LIMIT :mulai, :maxi");
+		$jumlah	= $conn->query("SELECT COUNT(A.id_tfd) AS total FROM transaksi_fakturdetail_l AS A LEFT JOIN transaksi_faktur_l AS B ON A.id_tfk=B.id_tfk WHERE A.id_tfd!='' $outlet $produk $tgl1 $tgl2")->fetch(PDO::FETCH_ASSOC);
+		$master	= $conn->prepare("SELECT A.jumlah_tfd, A.harga_tfd, A.diskon_tfd, A.total_tfd, B.kode_tfk, B.tgl_tfk, B.po_tfk,B.status_tfk, C.nama_pro, C.kode_pro, D.nama_out, D.ofcode_out, E.no_bcode, E.tgl_expired FROM transaksi_fakturdetail_l AS A LEFT JOIN transaksi_faktur_l AS B ON A.id_tfk=B.id_tfk LEFT JOIN produk AS C ON A.id_pro=C.id_pro LEFT JOIN outlet AS D ON B.id_out=D.id_out LEFT JOIN produk_stokdetail AS E ON A.id_psd=E.id_psd WHERE A.id_tfd!='' $outlet $produk $tgl1 $tgl2 ORDER BY B.tgl_tfk DESC, B.kode_tfk DESC LIMIT :mulai, :maxi");
 		$master->bindParam(':mulai', $mulai, PDO::PARAM_INT);
 		$master->bindParam(':maxi', $maxi, PDO::PARAM_INT);
 		// $master->bindParam(':tanggal', $tanggal, PDO::PARAM_STR);

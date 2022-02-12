@@ -31,12 +31,12 @@
             <thead>
                 <tr>
                     <th><center>#</center></th>
-                    <th>Nomor Faktur Donasi</th>
+                    <th>Nomor Faktur Lain-Lain</th>
                     <th>Outlet</th>
-                    <th><center>Tgl. Donasi</center></th>
-                    <th>Nomor SJ Donasi</th>
-                    <th><center>Tgl. SJ Donasi</center></th>
-                    <th>Keterangan Donasi</th>
+                    <th><center>Tgl</center></th>
+                    <!-- <th>Nomor SJ Donasi</th>
+                    <th><center>Tgl. SJ Donasi</center></th> -->
+                    <th>Keterangan Lain-Lain</th>
                     <!-- <th><center>Tgl Donasi</center></th> -->
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>

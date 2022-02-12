@@ -29,11 +29,11 @@
         <div class="modal-body">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label>Nomor Faktur Donasi<span class="tx-danger">*</span></label>
+                    <label>Nomor Faktur Lain - Lain<span class="tx-danger">*</span></label>
                     <input type="text" name="nomorfaktur" class="form-control" value="<?php echo($view['kode_tfk']); ?>" placeholder="Type here..." required="required" />
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Tgl. Faktur Donasi <span class="tx-danger">*</span></label>
+                    <label>Tgl. Faktur Lain - Lain <span class="tx-danger">*</span></label>
                     <input type="text" name="tglfak" class="form-control fortgl" value="<?php echo($view['tgl_tfk']); ?>" placeholder="9999-99-99" required="required" />
                 </div>
 			</div>

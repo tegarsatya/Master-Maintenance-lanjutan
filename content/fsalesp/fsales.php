@@ -34,8 +34,6 @@
                     <th>Nomor Faktur Pinjaman</th>
                     <th>Outlet</th>
                     <th><center>Tgl. Pinjaman</center></th>
-                    <th>Nomor SJ Pinjaman</th>
-                    <th><center>Tgl. SJ Pinjaman</center></th>
                     <th>Keterangan Pinjaman</th>
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>

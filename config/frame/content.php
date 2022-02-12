@@ -282,6 +282,10 @@
 		break;
 		case "efsalesp":
 			require_once("content/fsalesp/edit.php");
+		break;
+		case "rpenjualanp":
+			require_once("content/rpenjualanp/rpenjualanp.php");
+		break;
 
 		case "fsalesr":
 			require_once("content/fsalesr/fsales.php");
@@ -294,6 +298,10 @@
 		break;
 		case "efsalesr":
 			require_once("content/fsalesr/edit.php");
+		break;
+		case "rpenjualanr":
+			require_once("content/rpenjualanr/rpenjualanr.php");
+		break;
 
 		case "fsalesl":
 			require_once("content/fsalesl/fsales.php");
@@ -306,6 +314,9 @@
 		break;
 		case "efsalesl":
 			require_once("content/fsalesl/edit.php");
-	
+		break;
+		case "rpenjualanl":
+			require_once("content/rpenjualanl/rpenjualanl.php");
+		break;
 	}
 ?>

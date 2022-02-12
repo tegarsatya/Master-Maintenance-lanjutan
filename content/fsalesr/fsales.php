@@ -34,8 +34,6 @@
                     <th>Nomor Faktur Retur</th>
                     <th>Outlet</th>
                     <th><center>Tgl. Retur</center></th>
-                    <th>Nomor SJ Retur</th>
-                    <th><center>Tgl. SJ Retur</center></th>
                     <th>Keterangan Retur</th>
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>
