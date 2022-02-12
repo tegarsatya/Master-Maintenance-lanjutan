@@ -187,6 +187,13 @@
     RewriteRule ^itemsalesr/(.*)$ sistem.php?menu=itemsalesr&keycode=$1 [L]
     RewriteRule ^fsalesr/e/(.*)$ sistem.php?menu=efsalesr&keycode=$1 [L]
     RewriteRule ^fsalesr/v/(.*)$ sistem.php?menu=vfsalesr&keycode=$1 [L]
+    RewriteRule ^fsalesl$ sistem.php?menu=fsalesl [L]
+    RewriteRule ^fsalesl/cari=(.*)$ sistem.php?menu=fsalesl&cari=$1 [L]
+    RewriteRule ^fsalesl/i$ sistem.php?menu=ifsalesl [L]
+    RewriteRule ^itemsalesl/(.*)$ sistem.php?menu=itemsalesl&keycode=$1 [L]
+    RewriteRule ^fsalesl/e/(.*)$ sistem.php?menu=efsalesl&keycode=$1 [L]
+    RewriteRule ^fsalesl/v/(.*)$ sistem.php?menu=vfsalesl&keycode=$1 [L]
+
 
     
 	ErrorDocument 404 http://127.0.0.1/maintenance-lanjutan/error.php

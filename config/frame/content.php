@@ -294,6 +294,18 @@
 		break;
 		case "efsalesr":
 			require_once("content/fsalesr/edit.php");
+
+		case "fsalesl":
+			require_once("content/fsalesl/fsales.php");
+		break;
+		case "ifsalesl":
+			require_once("content/fsalesl/input.php");
+		break;
+		case "itemsalesl":
+			require_once("content/fsalesl/item.php");
+		break;
+		case "efsalesl":
+			require_once("content/fsalesl/edit.php");
 	
 	}
 ?>
