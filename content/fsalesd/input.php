@@ -56,7 +56,7 @@
             </div>
             <div class="col-sm-3 mg-t-10">
                 <label>Keterangan Donasi <span class="tx-danger">*</span></label>
-                <input type="text" name="nomorpo" class="form-control" placeholder="Ketik nomor donasi di sini..." />
+                <input type="text" name="nomorpo" class="form-control" placeholder="Ketik Keterangan donasi di sini..." />
             </div>
             <!-- <div class="col-sm-3 mg-t-10">
                 <label>Tanggal Donasi <span class="tx-danger">*</span></label>

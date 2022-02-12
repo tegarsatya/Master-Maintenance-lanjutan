@@ -15,7 +15,7 @@
 ?>
 	<link href="<?php echo("$sistem/DataTables/datatables.min.css"); ?>" rel="stylesheet" />
     <div class="modal-header">
-        <h6 class="modal-title" id="exampleModalLabel">Search Product Pinjaman <?php echo $cart; ?></h6>
+        <h6 class="modal-title" id="exampleModalLabel">Search Product Retur <?php echo $cart; ?></h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
         </button>
@@ -46,7 +46,7 @@
 					$master->execute();
 					while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
 				?>
-                	<tr onClick="<?php echo("getproductsalesp('$nomor', '$hasil[id_psd]', '$hasil[id_pro]', '$hasil[nama_pro]', '$hasil[kode_pro]', '$hasil[harga_phg]', '$hasil[berat_pro]', '$hasil[nama_kpr]', '$hasil[satuan_kpr]', '$hasil[nama_spr]', '$hasil[no_bcode]', '$hasil[tgl_expired]', '$hasil[gudang]', '$hasil[sisa_psd]', '$hasil[persen_pds]')"); ?>">
+                	<tr onClick="<?php echo("getproductsalesr('$nomor', '$hasil[id_psd]', '$hasil[id_pro]', '$hasil[nama_pro]', '$hasil[kode_pro]', '$hasil[harga_phg]', '$hasil[berat_pro]', '$hasil[nama_kpr]', '$hasil[satuan_kpr]', '$hasil[nama_spr]', '$hasil[no_bcode]', '$hasil[tgl_expired]', '$hasil[gudang]', '$hasil[sisa_psd]', '$hasil[persen_pds]')"); ?>">
                     	<td><?php echo($hasil['kode_pro']); ?></td>
                     	<td><?php echo($hasil['nama_pro']); ?></td>
                     	<td><center><?php echo($hasil['no_bcode']); ?></center></td>

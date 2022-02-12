@@ -283,7 +283,6 @@
 		case "efsalesp":
 			require_once("content/fsalesp/edit.php");
 
-
 		case "fsalesr":
 			require_once("content/fsalesr/fsales.php");
 		break;

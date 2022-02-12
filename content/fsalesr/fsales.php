@@ -35,9 +35,8 @@
                     <th>Outlet</th>
                     <th><center>Tgl. Retur</center></th>
                     <th>Nomor SJ Retur</th>
-                    <th><center>Tgl. SJ Pinjaman</center></th>
-                    <th>Nomor Retur</th>
-                    <th><center>Tgl Retur</center></th>
+                    <th><center>Tgl. SJ Retur</center></th>
+                    <th>Keterangan Retur</th>
                     <th><div align="right">Total</div></th>
                     <th><center>Detail</center></th>
                     <th><center>Action</center></th>
