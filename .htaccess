@@ -199,7 +199,7 @@
     RewriteRule ^rpenjualanr/cari=(.*)$ sistem.php?menu=rpenjualanr&cari=$1 [L]
     RewriteRule ^rpenjualanl$ sistem.php?menu=rpenjualanl [L]
     RewriteRule ^rpenjualanl/cari=(.*)$ sistem.php?menu=rpenjualanl&cari=$1 [L]
-
+    RewriteRule ^fsalespe$ sistem.php?menu=fsalespe [L]
 
     
 	ErrorDocument 404 http://127.0.0.1/maintenance-lanjutan/error.php

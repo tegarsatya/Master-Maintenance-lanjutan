@@ -318,5 +318,9 @@
 		case "rpenjualanl":
 			require_once("content/rpenjualanl/rpenjualanl.php");
 		break;
+
+		case "fsalespe":
+			require_once("content/fsalespe/fsales.php");
+		break;
 	}
 ?>
