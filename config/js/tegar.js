@@ -759,7 +759,7 @@ function getproduct(nomor, id, nama, code, harga, berat, kategori, satuan){
 	$('#modal1').modal('hide');
 }
 
-function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, stok, diskon){
+function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
 	var jumlah	= $("#pjumlah"+nomor).val(),
 		jumlah	= jumlah=='' ? 1 : jumlah;
 	//var diskon	= $("#pdiskon"+nomor).val(),
@@ -782,6 +782,7 @@ function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori
 	$("#satuanqty"+nomor).html(satuanqty);
 	$("#nobcode"+nomor).html(bcode);
 	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
 	$("#pdiskon"+nomor).val(diskon);
 	$("#prostok"+nomor).val(stok);
 	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
@@ -798,6 +799,7 @@ function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori
 	$("#kodestok"+nomor).val(kode);
 	$('#modal1').modal('hide');
 }
+
 
 function jumlahorder(nomor){
 	var harga	= $("#pharga"+nomor).val(),
@@ -1421,25 +1423,1107 @@ $("#formsalespnp").submit(function(e){
 			$("#btnsave").prop("disabled", false);
 			$("#formmenu").get(0).reset();
 			$("#imgloading").html('');
-			$("$btncancel").prop("disabled", true);
+		}
+	});
+});
+
+$("#formsalespnp").submit(function(e){
+	e.preventDefault();
+	var modal	= $("#namamodal").val();
+	$("#btnsave").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+modal+"/action.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: new FormData(this),
+		contentType	: false,
+		cache		: false,
+		processData	: false,
+		beforeSend	: function(){},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if (json.status === "Success") {
+				window.location.href = usuper+"/"+json.url;	
+			} else {
+				$("#btnsave").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Pesan error: " + json.message, "warning");
+			}
+		},
+		error: function(data) { 
+			swal("Maaf!", "Proses data error...", "error"); 
+		},
+		complete: function(data){
+			$("#btnsave").prop("disabled", false);
+			$("#formmenu").get(0).reset();
+			$("#imgloading").html('');
 		}
 	});
 });
 
 // end
 
- function handle((
-	Request $request,
-	$type = self::MASTER_REQUEST,
-	$catch = true
-  )
-  {
-	  $ip = $request->getClientIp($catch);
-	  if (!in_array($ip, $this->allowedIps)) {
-		  return new Response(
-			sprintf('IP %s is not allowed. ', $ip),
-			403
-		  );
-	  }
-	  return $this->app->handle($request, $type, $catch);
-  });
+//add by tegar
+
+// FAKTUR DONASI
+function getproductsalesd(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 1 : jumlah;
+	//var diskon	= $("#pdiskon"+nomor).val(),
+		//diskon	= diskon=='' ? 0 : diskon;
+	//var diskon	= $("#diskon1").val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var pppn	= $("#pppn").val(),
+		pppn	= pppn=='' ? 0 : bersih(pppn);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	$("#satuanqty"+nomor).html(satuanqty);
+	$("#nobcode"+nomor).html(bcode);
+	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
+	$("#pdiskon"+nomor).val(diskon);
+	$("#prostok"+nomor).val(stok);
+	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
+	$("#product"+nomor).val(produk);
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	//$("#product"+nomor).val(id);
+	cart(nomor, kode, 'addsales');
+	$("#kodestok"+nomor).val(kode);
+	$('#modal1').modal('hide');
+}
+
+function hitungsalesd(nomor){
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+		//pjumlah	= pjumlah=='' ? '' : bersih(pjumlah);
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var diskon	= $("#pdiskon"+nomor).val(),
+		diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(pjumlah==0 || pjumlah==''){
+		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(parseInt(pjumlah)>parseInt(stok)){
+			swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+			$("#pjumlah"+nomor).val(1);
+		}
+	}
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+function jumlahsalesd(nomor){
+	var outlet	= $("#outlet").val();
+	var product	= $("#product"+nomor).val();
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var	minorder= $("#minorder").val();
+	//var	diskon1	= $("#diskon1").val();
+	//var	diskon2	= $("#diskon2").val();
+	//var diskon	= (parseInt(jumlah)<=parseInt(minorder)) ? diskon1 : diskon2;
+	var diskon	= $("#pdiskon"+nomor).val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(outlet==''){
+		swal("Error", "Pilih outlet dulu...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(product==''){
+			swal("Error", "Pilih produk dulu...", "error");
+			$("#pjumlah"+nomor).val(1);
+		} else {
+			if(pjumlah==0 || pjumlah==''){
+				swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+				$("#pjumlah"+nomor).val(1);
+			} else {
+				if(parseInt(pjumlah)>parseInt(stok)){
+					swal("Error", "Jumlah Donasi melebihi jumlah stok...", "error");
+					$("#pjumlah"+nomor).val(1);
+				}
+			}
+			$("#pdiskon"+nomor).val(diskon);
+			$("#pharga"+nomor).val(titik(harga));
+			//$("#psubtotal"+nomor).val(titik(subtot));
+			$("#ptotal"+nomor).val(titik(total));
+			$("#pstotal").val(titik(stotal));
+			$("#pppn").val(titik(ppn));
+			$("#pgtotal").val(titik(gtotal));
+		}
+	}
+}
+
+function addsalesd(nomor, outlet){
+	var cart	= $("#cartaddsales").val();
+	var mitra	= $("#"+outlet).val();
+	$.ajax({
+		url		: usuper+"/modal/addsalesd/addsalesd.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "m" : mitra, "x" : nomor, "y" : cart },
+		success	: function(data){ $(".modal-content").html(data); }
+	});
+}
+
+function ceksalesd(){
+	var jumlah	= $("#jumaddsales").val();
+	var kode	= $("#outlet").val();
+	$("#imgloading1").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/ajax/ceksalesd/ceksalesd.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		cache		: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#koout").val(json.koout);
+			$("#fkout").val(json.fkout);
+			$("#minorder").val(json.minorder);
+			$("#diskon1").val(json.diskon1);
+			$("#diskon2").val(json.diskon2);
+			// $("#jatuhtempo").val(json.jatuhtempo);
+			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
+		},
+		error: function(data){ swal("Error", "Proses data error...", "error"); },
+		complete: function(data){
+			$("#imgloading1").html('');
+		}
+	});
+}
+function detailsalesd(){
+	var kode	= $("#kodesales").val();
+	$.ajax({
+		url			: usuper+"/ajax/detailsalesd/detailsalesd.php",
+		type		: "POST",
+		//dataType: "json",
+		async		: true,
+		dataType	: "text",
+		//cache	: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#dataaddfaktur").html(json.tabel);
+			$("#footeraddfaktur").html(json.footer);
+			$("#nofaktur").val(json.nofaktur);
+			$("#tglsj").val(json.tglsj);
+			$("#namaoutlet").val(json.namaoutlet);
+			$("#alamatkirim").val(json.alamatkirim);
+			$("#npwp").val(json.npwp);
+			$("#nomorpo").val(json.nomorpo);
+		}
+	});
+}
+
+function delsalesd(nomor){
+	var stokid	= $("#kodestok"+nomor).val();
+	var cart	= $("#cartaddsales").val();
+	var jumlah	= $("#jumaddsales").val();
+	var total	= $("#ptotal"+nomor).val();
+	var pstotal	= $("#pstotal").val();
+	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
+	var ppn		= (stotal * 10) / 100;
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		var hasil	= cart.replace("-"+stokid, "").replace(stokid, ""),
+			hasil	= (hasil.substr(0, 1)=="-") ? hasil.substr(1) : hasil;
+		var jitem	= parseInt(jumlah) - 1;
+		$("#cartaddsales").val(hasil);
+		$("#traddsales"+nomor).remove();
+		$("#jumaddsales").val(jitem);
+		$("#pstotal").val(titik(stotal));
+		$("#pppn").val(titik(ppn));
+		$("#pgtotal").val(titik(gtotal));
+	}
+}
+
+$("#formsalespnpd").submit(function(e){
+	e.preventDefault();
+	var modal	= $("#namamodal").val();
+	$("#btnsave").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+modal+"/action.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: new FormData(this),
+		contentType	: false,
+		cache		: false,
+		processData	: false,
+		beforeSend	: function(){},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if (json.status === "Success") {
+				window.location.href = usuper+"/"+json.url;	
+			} else {
+				$("#btnsave").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Pesan error: " + json.message, "warning");
+			}
+		},
+		error: function(data) { 
+			swal("Maaf!", "Proses data error...", "error"); 
+		},
+		complete: function(data){
+			$("#btnsave").prop("disabled", false);
+			$("#formmenu").get(0).reset();
+			$("#imgloading").html('');
+		}
+	});
+});
+
+// FAKTUR DONASI END
+
+// FAKTUR PINJAMAN
+
+function getproductsalesp(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 1 : jumlah;
+	//var diskon	= $("#pdiskon"+nomor).val(),
+		//diskon	= diskon=='' ? 0 : diskon;
+	//var diskon	= $("#diskon1").val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var pppn	= $("#pppn").val(),
+		pppn	= pppn=='' ? 0 : bersih(pppn);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	$("#satuanqty"+nomor).html(satuanqty);
+	$("#nobcode"+nomor).html(bcode);
+	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
+	$("#pdiskon"+nomor).val(diskon);
+	$("#prostok"+nomor).val(stok);
+	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
+	$("#product"+nomor).val(produk);
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	//$("#product"+nomor).val(id);
+	cart(nomor, kode, 'addsales');
+	$("#kodestok"+nomor).val(kode);
+	$('#modal1').modal('hide');
+}
+
+function hitungsalesp(nomor){
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+		//pjumlah	= pjumlah=='' ? '' : bersih(pjumlah);
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var diskon	= $("#pdiskon"+nomor).val(),
+		diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(pjumlah==0 || pjumlah==''){
+		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(parseInt(pjumlah)>parseInt(stok)){
+			swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+			$("#pjumlah"+nomor).val(1);
+		}
+	}
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+function jumlahsalesp(nomor){
+	var outlet	= $("#outlet").val();
+	var product	= $("#product"+nomor).val();
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var	minorder= $("#minorder").val();
+	//var	diskon1	= $("#diskon1").val();
+	//var	diskon2	= $("#diskon2").val();
+	//var diskon	= (parseInt(jumlah)<=parseInt(minorder)) ? diskon1 : diskon2;
+	var diskon	= $("#pdiskon"+nomor).val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(outlet==''){
+		swal("Error", "Pilih outlet dulu...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(product==''){
+			swal("Error", "Pilih produk dulu...", "error");
+			$("#pjumlah"+nomor).val(1);
+		} else {
+			if(pjumlah==0 || pjumlah==''){
+				swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+				$("#pjumlah"+nomor).val(1);
+			} else {
+				if(parseInt(pjumlah)>parseInt(stok)){
+					swal("Error", "Jumlah Donasi melebihi jumlah stok...", "error");
+					$("#pjumlah"+nomor).val(1);
+				}
+			}
+			$("#pdiskon"+nomor).val(diskon);
+			$("#pharga"+nomor).val(titik(harga));
+			//$("#psubtotal"+nomor).val(titik(subtot));
+			$("#ptotal"+nomor).val(titik(total));
+			$("#pstotal").val(titik(stotal));
+			$("#pppn").val(titik(ppn));
+			$("#pgtotal").val(titik(gtotal));
+		}
+	}
+}
+
+function addsalesp(nomor, outlet){
+	var cart	= $("#cartaddsales").val();
+	var mitra	= $("#"+outlet).val();
+	$.ajax({
+		url		: usuper+"/modal/addsalesp/addsalesp.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "m" : mitra, "x" : nomor, "y" : cart },
+		success	: function(data){ $(".modal-content").html(data); }
+	});
+}
+
+function ceksalesp(){
+	var jumlah	= $("#jumaddsales").val();
+	var kode	= $("#outlet").val();
+	$("#imgloading1").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/ajax/ceksalesp/ceksalesp.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		cache		: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#koout").val(json.koout);
+			$("#fkout").val(json.fkout);
+			$("#minorder").val(json.minorder);
+			$("#diskon1").val(json.diskon1);
+			$("#diskon2").val(json.diskon2);
+			// $("#jatuhtempo").val(json.jatuhtempo);
+			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
+		},
+		error: function(data){ swal("Error", "Proses data error...", "error"); },
+		complete: function(data){
+			$("#imgloading1").html('');
+		}
+	});
+}
+function detailsalesp(){
+	var kode	= $("#kodesales").val();
+	$.ajax({
+		url			: usuper+"/ajax/detailsalesp/detailsalesp.php",
+		type		: "POST",
+		//dataType: "json",
+		async		: true,
+		dataType	: "text",
+		//cache	: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#dataaddfaktur").html(json.tabel);
+			$("#footeraddfaktur").html(json.footer);
+			$("#nofaktur").val(json.nofaktur);
+			$("#tglsj").val(json.tglsj);
+			$("#namaoutlet").val(json.namaoutlet);
+			$("#alamatkirim").val(json.alamatkirim);
+			$("#npwp").val(json.npwp);
+			$("#nomorpo").val(json.nomorpo);
+		}
+	});
+}
+
+function delsalesp(nomor){
+	var stokid	= $("#kodestok"+nomor).val();
+	var cart	= $("#cartaddsales").val();
+	var jumlah	= $("#jumaddsales").val();
+	var total	= $("#ptotal"+nomor).val();
+	var pstotal	= $("#pstotal").val();
+	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
+	var ppn		= (stotal * 10) / 100;
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		var hasil	= cart.replace("-"+stokid, "").replace(stokid, ""),
+			hasil	= (hasil.substr(0, 1)=="-") ? hasil.substr(1) : hasil;
+		var jitem	= parseInt(jumlah) - 1;
+		$("#cartaddsales").val(hasil);
+		$("#traddsales"+nomor).remove();
+		$("#jumaddsales").val(jitem);
+		$("#pstotal").val(titik(stotal));
+		$("#pppn").val(titik(ppn));
+		$("#pgtotal").val(titik(gtotal));
+	}
+}
+
+$("#formsalespnpp").submit(function(e){
+	e.preventDefault();
+	var modal	= $("#namamodal").val();
+	$("#btnsave").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+modal+"/action.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: new FormData(this),
+		contentType	: false,
+		cache		: false,
+		processData	: false,
+		beforeSend	: function(){},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if (json.status === "Success") {
+				window.location.href = usuper+"/"+json.url;	
+			} else {
+				$("#btnsave").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Pesan error: " + json.message, "warning");
+			}
+		},
+		error: function(data) { 
+			swal("Maaf!", "Proses data error...", "error"); 
+		},
+		complete: function(data){
+			$("#btnsave").prop("disabled", false);
+			$("#formmenu").get(0).reset();
+			$("#imgloading").html('');
+		}
+	});
+});
+
+// FAKTUR PINJAMAN END
+
+// FAKTUR RETUR
+
+function getproductsalesr(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 1 : jumlah;
+	//var diskon	= $("#pdiskon"+nomor).val(),
+		//diskon	= diskon=='' ? 0 : diskon;
+	//var diskon	= $("#diskon1").val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var pppn	= $("#pppn").val(),
+		pppn	= pppn=='' ? 0 : bersih(pppn);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	$("#satuanqty"+nomor).html(satuanqty);
+	$("#nobcode"+nomor).html(bcode);
+	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
+	$("#pdiskon"+nomor).val(diskon);
+	$("#prostok"+nomor).val(stok);
+	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
+	$("#product"+nomor).val(produk);
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	//$("#product"+nomor).val(id);
+	cart(nomor, kode, 'addsales');
+	$("#kodestok"+nomor).val(kode);
+	$('#modal1').modal('hide');
+}
+
+function hitungsalesr(nomor){
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+		//pjumlah	= pjumlah=='' ? '' : bersih(pjumlah);
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var diskon	= $("#pdiskon"+nomor).val(),
+		diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(pjumlah==0 || pjumlah==''){
+		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(parseInt(pjumlah)>parseInt(stok)){
+			swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+			$("#pjumlah"+nomor).val(1);
+		}
+	}
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+function jumlahsalesr(nomor){
+	var outlet	= $("#outlet").val();
+	var product	= $("#product"+nomor).val();
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var	minorder= $("#minorder").val();
+	//var	diskon1	= $("#diskon1").val();
+	//var	diskon2	= $("#diskon2").val();
+	//var diskon	= (parseInt(jumlah)<=parseInt(minorder)) ? diskon1 : diskon2;
+	var diskon	= $("#pdiskon"+nomor).val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(outlet==''){
+		swal("Error", "Pilih outlet dulu...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(product==''){
+			swal("Error", "Pilih produk dulu...", "error");
+			$("#pjumlah"+nomor).val(1);
+		} else {
+			if(pjumlah==0 || pjumlah==''){
+				swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+				$("#pjumlah"+nomor).val(1);
+			} else {
+				if(parseInt(pjumlah)>parseInt(stok)){
+					swal("Error", "Jumlah Donasi melebihi jumlah stok...", "error");
+					$("#pjumlah"+nomor).val(1);
+				}
+			}
+			$("#pdiskon"+nomor).val(diskon);
+			$("#pharga"+nomor).val(titik(harga));
+			//$("#psubtotal"+nomor).val(titik(subtot));
+			$("#ptotal"+nomor).val(titik(total));
+			$("#pstotal").val(titik(stotal));
+			$("#pppn").val(titik(ppn));
+			$("#pgtotal").val(titik(gtotal));
+		}
+	}
+}
+
+function addsalesr(nomor, outlet){
+	var cart	= $("#cartaddsales").val();
+	var mitra	= $("#"+outlet).val();
+	$.ajax({
+		url		: usuper+"/modal/addsalesr/addsalesr.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "m" : mitra, "x" : nomor, "y" : cart },
+		success	: function(data){ $(".modal-content").html(data); }
+	});
+}
+
+function ceksalesr(){
+	var jumlah	= $("#jumaddsales").val();
+	var kode	= $("#outlet").val();
+	$("#imgloading1").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/ajax/ceksalesr/ceksalesr.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		cache		: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#koout").val(json.koout);
+			$("#fkout").val(json.fkout);
+			$("#minorder").val(json.minorder);
+			$("#diskon1").val(json.diskon1);
+			$("#diskon2").val(json.diskon2);
+			// $("#jatuhtempo").val(json.jatuhtempo);
+			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
+		},
+		error: function(data){ swal("Error", "Proses data error...", "error"); },
+		complete: function(data){
+			$("#imgloading1").html('');
+		}
+	});
+}
+function detailsalesr(){
+	var kode	= $("#kodesales").val();
+	$.ajax({
+		url			: usuper+"/ajax/detailsalesr/detailsalesr.php",
+		type		: "POST",
+		//dataType: "json",
+		async		: true,
+		dataType	: "text",
+		//cache	: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#dataaddfaktur").html(json.tabel);
+			$("#footeraddfaktur").html(json.footer);
+			$("#nofaktur").val(json.nofaktur);
+			$("#tglsj").val(json.tglsj);
+			$("#namaoutlet").val(json.namaoutlet);
+			$("#alamatkirim").val(json.alamatkirim);
+			$("#npwp").val(json.npwp);
+			$("#nomorpo").val(json.nomorpo);
+		}
+	});
+}
+
+function delsalesr(nomor){
+	var stokid	= $("#kodestok"+nomor).val();
+	var cart	= $("#cartaddsales").val();
+	var jumlah	= $("#jumaddsales").val();
+	var total	= $("#ptotal"+nomor).val();
+	var pstotal	= $("#pstotal").val();
+	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
+	var ppn		= (stotal * 10) / 100;
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		var hasil	= cart.replace("-"+stokid, "").replace(stokid, ""),
+			hasil	= (hasil.substr(0, 1)=="-") ? hasil.substr(1) : hasil;
+		var jitem	= parseInt(jumlah) - 1;
+		$("#cartaddsales").val(hasil);
+		$("#traddsales"+nomor).remove();
+		$("#jumaddsales").val(jitem);
+		$("#pstotal").val(titik(stotal));
+		$("#pppn").val(titik(ppn));
+		$("#pgtotal").val(titik(gtotal));
+	}
+}
+
+$("#formsalespnpr").submit(function(e){
+	e.preventDefault();
+	var modal	= $("#namamodal").val();
+	$("#btnsave").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+modal+"/action.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: new FormData(this),
+		contentType	: false,
+		cache		: false,
+		processData	: false,
+		beforeSend	: function(){},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if (json.status === "Success") {
+				window.location.href = usuper+"/"+json.url;	
+			} else {
+				$("#btnsave").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Pesan error: " + json.message, "warning");
+			}
+		},
+		error: function(data) { 
+			swal("Maaf!", "Proses data error...", "error"); 
+		},
+		complete: function(data){
+			$("#btnsave").prop("disabled", false);
+			$("#formmenu").get(0).reset();
+			$("#imgloading").html('');
+		}
+	});
+});
+
+// END FAKTUR RETUR
+
+function getproductsalesl(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, gudang, stok, diskon){
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 1 : jumlah;
+	//var diskon	= $("#pdiskon"+nomor).val(),
+		//diskon	= diskon=='' ? 0 : diskon;
+	//var diskon	= $("#diskon1").val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var pppn	= $("#pppn").val(),
+		pppn	= pppn=='' ? 0 : bersih(pppn);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	$("#satuanqty"+nomor).html(satuanqty);
+	$("#nobcode"+nomor).html(bcode);
+	$("#tgled"+nomor).html(tgled);
+	$("#gudang"+nomor).html(gudang);
+	$("#pdiskon"+nomor).val(diskon);
+	$("#prostok"+nomor).val(stok);
+	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
+	$("#product"+nomor).val(produk);
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+	$("#noproduct"+nomor).html('('+code+') '+nama);
+	//$("#product"+nomor).val(id);
+	cart(nomor, kode, 'addsales');
+	$("#kodestok"+nomor).val(kode);
+	$('#modal1').modal('hide');
+}
+
+function hitungsalesl(nomor){
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+		//pjumlah	= pjumlah=='' ? '' : bersih(pjumlah);
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var diskon	= $("#pdiskon"+nomor).val(),
+		diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(pjumlah==0 || pjumlah==''){
+		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(parseInt(pjumlah)>parseInt(stok)){
+			swal("Error", "Jumlah order melebihi jumlah stok...", "error");
+			$("#pjumlah"+nomor).val(1);
+		}
+	}
+	$("#pharga"+nomor).val(titik(harga));
+	//$("#psubtotal"+nomor).val(titik(subtot));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+function jumlahsalesl(nomor){
+	var outlet	= $("#outlet").val();
+	var product	= $("#product"+nomor).val();
+	var pjumlah	= bersih($("#pjumlah"+nomor).val());
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var stok	= $("#prostok"+nomor).val(),
+		stok	= stok=='' ? 0 : bersih(stok);
+	var jumlah	= bersih($("#pjumlah"+nomor).val()),
+		jumlah 	= (parseInt(jumlah)==0 || jumlah=='' || parseInt(jumlah)>parseInt(stok)) ? 1 : bersih(jumlah);
+	var	minorder= $("#minorder").val();
+	//var	diskon1	= $("#diskon1").val();
+	//var	diskon2	= $("#diskon2").val();
+	//var diskon	= (parseInt(jumlah)<=parseInt(minorder)) ? diskon1 : diskon2;
+	var diskon	= $("#pdiskon"+nomor).val();
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(outlet==''){
+		swal("Error", "Pilih outlet dulu...", "error");
+		$("#pjumlah"+nomor).val(1);
+	} else {
+		if(product==''){
+			swal("Error", "Pilih produk dulu...", "error");
+			$("#pjumlah"+nomor).val(1);
+		} else {
+			if(pjumlah==0 || pjumlah==''){
+				swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
+				$("#pjumlah"+nomor).val(1);
+			} else {
+				if(parseInt(pjumlah)>parseInt(stok)){
+					swal("Error", "Jumlah Donasi melebihi jumlah stok...", "error");
+					$("#pjumlah"+nomor).val(1);
+				}
+			}
+			$("#pdiskon"+nomor).val(diskon);
+			$("#pharga"+nomor).val(titik(harga));
+			//$("#psubtotal"+nomor).val(titik(subtot));
+			$("#ptotal"+nomor).val(titik(total));
+			$("#pstotal").val(titik(stotal));
+			$("#pppn").val(titik(ppn));
+			$("#pgtotal").val(titik(gtotal));
+		}
+	}
+}
+
+function addsalesl(nomor, outlet){
+	var cart	= $("#cartaddsales").val();
+	var mitra	= $("#"+outlet).val();
+	$.ajax({
+		url		: usuper+"/modal/addsalesl/addsalesl.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "m" : mitra, "x" : nomor, "y" : cart },
+		success	: function(data){ $(".modal-content").html(data); }
+	});
+}
+
+function ceksalesl(){
+	var jumlah	= $("#jumaddsales").val();
+	var kode	= $("#outlet").val();
+	$("#imgloading1").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/ajax/ceksalesl/ceksalesl.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		cache		: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#koout").val(json.koout);
+			$("#fkout").val(json.fkout);
+			$("#minorder").val(json.minorder);
+			$("#diskon1").val(json.diskon1);
+			$("#diskon2").val(json.diskon2);
+			// $("#jatuhtempo").val(json.jatuhtempo);
+			$("#dataaddsales").html('<tr id="pilihoutlet"><td colspan="10">Tambah produk...</td></tr>');
+		},
+		error: function(data){ swal("Error", "Proses data error...", "error"); },
+		complete: function(data){
+			$("#imgloading1").html('');
+		}
+	});
+}
+function detailsalesl(){
+	var kode	= $("#kodesales").val();
+	$.ajax({
+		url			: usuper+"/ajax/detailsalesl/detailsalesl.php",
+		type		: "POST",
+		//dataType: "json",
+		async		: true,
+		dataType	: "text",
+		//cache	: false,
+		data		: { "x" : kode },
+		success		: function(data){
+			var json	= JSON.parse(data);
+			$("#dataaddfaktur").html(json.tabel);
+			$("#footeraddfaktur").html(json.footer);
+			$("#nofaktur").val(json.nofaktur);
+			$("#tglsj").val(json.tglsj);
+			$("#namaoutlet").val(json.namaoutlet);
+			$("#alamatkirim").val(json.alamatkirim);
+			$("#npwp").val(json.npwp);
+			$("#nomorpo").val(json.nomorpo);
+		}
+	});
+}
+
+function delsalesl(nomor){
+	var stokid	= $("#kodestok"+nomor).val();
+	var cart	= $("#cartaddsales").val();
+	var jumlah	= $("#jumaddsales").val();
+	var total	= $("#ptotal"+nomor).val();
+	var pstotal	= $("#pstotal").val();
+	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
+	var ppn		= (stotal * 10) / 100;
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		var hasil	= cart.replace("-"+stokid, "").replace(stokid, ""),
+			hasil	= (hasil.substr(0, 1)=="-") ? hasil.substr(1) : hasil;
+		var jitem	= parseInt(jumlah) - 1;
+		$("#cartaddsales").val(hasil);
+		$("#traddsales"+nomor).remove();
+		$("#jumaddsales").val(jitem);
+		$("#pstotal").val(titik(stotal));
+		$("#pppn").val(titik(ppn));
+		$("#pgtotal").val(titik(gtotal));
+	}
+}
+
+$("#formsalespnpl").submit(function(e){
+	e.preventDefault();
+	var modal	= $("#namamodal").val();
+	$("#btnsave").prop("disabled", true);
+	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
+	$.ajax({
+		url			: usuper+"/modal/"+modal+"/action.php",
+		type		: "POST",
+		async		: true,
+		dataType	: "text",
+		data		: new FormData(this),
+		contentType	: false,
+		cache		: false,
+		processData	: false,
+		beforeSend	: function(){},
+		success: function(data){
+			var json	= JSON.parse(data);
+			if (json.status === "Success") {
+				window.location.href = usuper+"/"+json.url;	
+			} else {
+				$("#btnsave").prop("disabled", false);
+				$("#imgloading").html('');
+				swal("Maaf!", "Pesan error: " + json.message, "warning");
+			}
+		},
+		error: function(data) { 
+			swal("Maaf!", "Proses data error...", "error"); 
+		},
+		complete: function(data){
+			$("#btnsave").prop("disabled", false);
+			$("#formmenu").get(0).reset();
+			$("#imgloading").html('');
+		}
+	});
+});
+
+// FAKTUR LAIN-LAIN
+
+
+
+
+
+// END FAKTUR LAIN-LAIN
+
+// end
