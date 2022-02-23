@@ -319,7 +319,7 @@
 		}
 
 		function transcodedn($kunci, $kode, $tabel) {
-			$prefix = " GIV/";
+			$prefix = " DON/";
 			$conn	= $this->open();
 			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
 			$conn	= $this->close();
@@ -332,7 +332,7 @@
 		}
 
 		function transcodepm($kunci, $kode, $tabel) {
-			$prefix = " BOR/";
+			$prefix = " PIN/";
 			$conn	= $this->open();
 			$select	= $conn->query("SELECT MAX($kode) AS kode FROM $tabel WHERE $kode LIKE '%$kunci%'")->fetch(PDO::FETCH_ASSOC);
 			$conn	= $this->close();

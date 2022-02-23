@@ -98,7 +98,7 @@
         <div class="clearfix mg-t-25 mg-b-25"></div>
         <div class="row row-sm">
             <div class="col-sm-12">
-                <a href="<?php echo("$sistem/porder"); ?>" title="Batal">
+                <a href="<?php echo("$sistem/rorder"); ?>" title="Batal">
                 <button type="button" class="btn btn-secondary btn-xs">Batal</button>
 				</a>
                 <button type="submit" id="bsave" class="btn btn-dark btn-xs">Simpan</button>

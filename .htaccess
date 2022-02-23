@@ -201,6 +201,12 @@
     RewriteRule ^rpenjualanl/cari=(.*)$ sistem.php?menu=rpenjualanl&cari=$1 [L]
     RewriteRule ^fsalespe$ sistem.php?menu=fsalespe [L]
 
+    RewriteRule ^rorderr$ sistem.php?menu=rorderr [L]
+    RewriteRule ^rorderr/cari=(.*)$ sistem.php?menu=rorderr&cari=$1 [L]
+    RewriteRule ^rorderr/i$ sistem.php?menu=irorderr [L]
+    RewriteRule ^rorderr/e/(.*)$ sistem.php?menu=erorderr&keycode=$1 [L]
+    RewriteRule ^rorderr/v/(.*)$ sistem.php?menu=vrorderr&keycode=$1 [L]
+
     
 	ErrorDocument 404 http://127.0.0.1/maintenance-lanjutan/error.php
 	RewriteCond %{QUERY_STRING} .

@@ -28,6 +28,7 @@
     	<input type="hidden" name="product[]" id="<?php echo("product$nomor"); ?>" class="itemproduct" readonly="readonly" />
 		<input type="hidden" name="kodestok[]" id="<?php echo("kodestok$nomor"); ?>" readonly="readonly" />
 		<input type="hidden" name="bcode[]" id="<?php echo("bcode$nomor"); ?>" readonly="readonly" />
+		<input type="hidden" name="gudang[]" id="<?php echo("gudang$nomor"); ?>" readonly="readonly" />
 		<input type="hidden" name="idpsd[]" id="<?php echo("idpsd$nomor"); ?>" readonly="readonly" />
 		<input type="hidden" name="namaproduct[]" id="<?php echo("namaproduct$nomor"); ?>" readonly="readonly" />
 		<input type="hidden" name="id_trd[]" id="<?php echo("id_trd$nomor"); ?>" readonly="readonly" />

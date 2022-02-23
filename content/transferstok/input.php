@@ -86,6 +86,7 @@
                             <th>Product</th>
                             <th>Detail</th>
                             <th>Batchcode</th>
+                            <th>Gudang</th>
                             <th>Tgl. Expired</th>
                             <th>Stok</th>
                             <th>Harga</th>

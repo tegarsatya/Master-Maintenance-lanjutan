@@ -16,7 +16,7 @@
 	switch($act){
 		case "input":
 			$hasil 	= "Error";
-			$id		= $_POST['id'] = 'TTR'.time();
+			$id		= $_POST['id'] = 'TRF'.time();
 			$kode	= $secu->injection(@$_POST['kode']);
 			$type	= $secu->injection(@$_POST['transfer_apl_type']);
 			$tgl	= $secu->injection(@$_POST['tanggal']);

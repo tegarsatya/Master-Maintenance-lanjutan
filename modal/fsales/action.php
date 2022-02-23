@@ -24,8 +24,8 @@
 				$outlet	= $secu->injection($_POST['outlet']);
 				$invoice= $secu->injection($_POST['invoice']);
 				$pecah	= explode("/", $invoice);
-				$gabung	= '/SJ/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
-				$gobong	= '/FKT/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
+				$gabung	= 'B/SJ/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
+				$gobong	= 'B/FKT/'.$pecah[2].'/'.$data->romawi(date('m')).'/'.date('y');
 				$kode	= $invoice;
 				$nofak	= $secu->injection($_POST['nomorfaktur']);
 				$tglfak	= $secu->injection($_POST['tglfaktur']);

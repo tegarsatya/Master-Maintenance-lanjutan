@@ -81,6 +81,7 @@
 		case "vorder":
 			require_once("content/order/view.php");
 		break;
+
 		case "rorder":
 			require_once("content/rorder/rorder.php");
 		break;
@@ -93,6 +94,20 @@
 		case "vrorder":
 			require_once("content/rorder/view.php");
 		break;
+
+		case "rorderr":
+			require_once("content/rorderr/rorder.php");
+		break;
+		case "irorderr":
+			require_once("content/rorderr/input.php");
+		break;
+		case "erorderr":
+			require_once("content/rorderr/edit.php");
+		break;
+		case "vrorderr":
+			require_once("content/rorderr/view.php");
+		break;
+
 		case "inventory":
 			require_once("content/inventory/inventory.php");
 		break;

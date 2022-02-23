@@ -1,7 +1,7 @@
 <?php
 	date_default_timezone_set('Asia/Jakarta');
 	class DB {
-		private $server		= "mysql:host=localhost; dbname=maintenance-lanjutan";
+		private $server		= "mysql:host=localhost; dbname=maintenance-lanjutan1";
 		private $user		= "root";
 		private $pass		= "";
 		private $options	= array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,);

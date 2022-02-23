@@ -16,8 +16,8 @@
 	$read->bindParam(':kode', $kode, PDO::PARAM_STR);
 	$read->execute();
 	$view	= $read->fetch(PDO::FETCH_ASSOC);
-	$gabung	= '/SJ/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
-	$gobong	= '/FKT/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
+	$gabung	= 'B/SJ/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
+	$gobong	= 'B/FKT/'.$view['kode_kot'].'/'.$data->romawi(date('m')).'/'.date('y');
 	$inv	= $data->transcode($gabung, 'sj_tfk', 'transaksi_faktur');
 	$fak	= $data->transcode($gobong, 'kode_tfk', 'transaksi_faktur');
 	$limit	= date("Y-m-d", strtotime("+$view[top_odi] Days", strtotime($catat)));

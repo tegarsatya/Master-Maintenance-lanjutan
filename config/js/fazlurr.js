@@ -1202,7 +1202,7 @@ function deleteProductTransfer(nomor){
 }
 
 
-function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, stok, id_trd, tgl_psd, gudang) {
+function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode,gudang, tgled, stok, id_trd, tgl_psd, gudang) {
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#product"+nomor).val(produk);
 	$("#namaproduct"+nomor).val(nama);
@@ -1210,6 +1210,7 @@ function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kate
 	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
 	$("#nobcode"+nomor).html(bcode);
 	$("#bcode"+nomor).val(bcode);
+	$("#gudang"+nomor).val(gudang);
 	$("#idpsd"+nomor).val(kode);
 	$("#id_trd"+nomor).val(id_trd);
 	$("#tgl_expired"+nomor).val(tgled);
@@ -1427,41 +1428,6 @@ $("#formsalespnp").submit(function(e){
 	});
 });
 
-$("#formsalespnp").submit(function(e){
-	e.preventDefault();
-	var modal	= $("#namamodal").val();
-	$("#btnsave").prop("disabled", true);
-	$("#imgloading").html('<img src="'+usuper+'/berkas/gif/tunggu.gif" style="width:15%;"  />');
-	$.ajax({
-		url			: usuper+"/modal/"+modal+"/action.php",
-		type		: "POST",
-		async		: true,
-		dataType	: "text",
-		data		: new FormData(this),
-		contentType	: false,
-		cache		: false,
-		processData	: false,
-		beforeSend	: function(){},
-		success: function(data){
-			var json	= JSON.parse(data);
-			if (json.status === "Success") {
-				window.location.href = usuper+"/"+json.url;	
-			} else {
-				$("#btnsave").prop("disabled", false);
-				$("#imgloading").html('');
-				swal("Maaf!", "Pesan error: " + json.message, "warning");
-			}
-		},
-		error: function(data) { 
-			swal("Maaf!", "Proses data error...", "error"); 
-		},
-		complete: function(data){
-			$("#btnsave").prop("disabled", false);
-			$("#formmenu").get(0).reset();
-			$("#imgloading").html('');
-		}
-	});
-});
 
 // end
 
@@ -2518,12 +2484,109 @@ $("#formsalespnpl").submit(function(e){
 	});
 });
 
-// FAKTUR LAIN-LAIN
-
-
 
 
 
 // END FAKTUR LAIN-LAIN
 
+
+// Masukin Barang Retur
+
+function deleteorderr(nomor){
+	var jumlah	= $("#jumaddorderr").val();
+	if(parseInt(jumlah)<=1){
+		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
+	} else {
+		$("#traddorderr"+nomor).remove();
+		var total	= parseInt(jumlah) - 1;
+		$("#jumaddorderr").val(total);
+	}
+}
+
+function addrorderr(nomor, kode){
+	var jumlah	= $("#jumaddorderr").val();
+	var diskon1	= $("#diskon1").val();
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	$.ajax({
+		url		: usuper+"/ajax/addrorderr/addrorder.php",
+		type	: "POST",
+		async	: true,
+		dataType: "text",
+		cache	: false,
+		data	: { "j" : jumlah, "k" : kode, "l" : diskon1 },
+		success	: function(data){
+			var json	= JSON.parse(data);
+			$("#dataaddorderr").append(json.tabel);
+			//$("#data"+menu).append(data);
+			var total	= parseInt(jumlah) + 1;
+			var stotal	= parseInt(pstotal) + parseInt(json.total);
+			var ppn		= (stotal * 10) / 100;
+			var gtotal	= parseInt(stotal) + parseInt(ppn);
+			$("#jumaddorderr").val(total);
+			$("#pstotal").val(titik(stotal));
+			$("#pppn").val(titik(ppn));
+			$("#pgtotal").val(titik(gtotal));
+		}
+	});
+}
+
+function jumlahorderr(nomor){
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 0 : bersih(jumlah);
+	var	minorder= $("#minorder").val();
+	var	diskon1	= $("#diskon1").val();
+	var	diskon2	= $("#diskon2").val();
+	var diskon	= (parseInt(jumlah)<=parseInt(minorder)) ? diskon1 : diskon2;
+	//var diskon	= $("#pdiskon"+nomor).val(),
+		//diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#pdiskon"+nomor).val(diskon);
+	$("#pjumlah"+nomor).val(titik(jumlah));
+	$("#pharga"+nomor).val(titik(harga));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+function hitungorderr(nomor){
+	var harga	= $("#pharga"+nomor).val(),
+		harga	= harga=='' ? 0 : bersih(harga);
+	var jumlah	= $("#pjumlah"+nomor).val(),
+		jumlah	= jumlah=='' ? 0 : bersih(jumlah);
+	var diskon	= $("#pdiskon"+nomor).val(),
+		diskon	= diskon=='' ? 0 : diskon;
+	var ptotal	= $("#ptotal"+nomor).val(),
+		ptotal	= ptotal=='' ? 0 : bersih(ptotal);
+	var pstotal	= $("#pstotal").val(),
+		pstotal	= pstotal=='' ? 0 : bersih(pstotal);
+	var pgtotal	= $("#pgtotal").val(),
+		pgtotal	= pgtotal=='' ? 0 : bersih(pgtotal);
+	var subtot	= (jumlah * harga);
+	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
+	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
+	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var gtotal	= parseInt(stotal) + parseInt(ppn);
+	$("#pjumlah"+nomor).val(titik(jumlah));
+	$("#pharga"+nomor).val(titik(harga));
+	$("#ptotal"+nomor).val(titik(total));
+	$("#pstotal").val(titik(stotal));
+	$("#pppn").val(titik(ppn));
+	$("#pgtotal").val(titik(gtotal));
+}
+
+// End Masukin Barang Retur
 // end
