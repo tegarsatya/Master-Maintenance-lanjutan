@@ -85,7 +85,7 @@
                 <input type="hidden" name="diskon2" id="diskon2" value="" readonly="readonly" />
                 <input type="hidden" name="cartaddsales" id="cartaddsales" value="" readonly="readonly" />
                 <input type="hidden" name="jumaddsales" id="jumaddsales" value="0" readonly="readonly" />
-                <a onclick="addmaximal('addsales', 'outlet', 50)"><span class="badge badge-success"><i class="fa fa-plus-circle"></i> Add Data</span></a>
+                <a onclick="addmaximal('addsales', 'outlet', 100)"><span class="badge badge-success"><i class="fa fa-plus-circle"></i> Add Data</span></a>
             </div>
         </div>
         <div class="clearfix mg-t-25 mg-b-25"></div>

@@ -1202,7 +1202,7 @@ function deleteProductTransfer(nomor){
 }
 
 
-function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode,gudang, tgled, stok, id_trd, tgl_psd, gudang) {
+function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kategori, satuanqty, satuan, bcode, tgled, stok, id_trd, tgl_psd, gudang) {
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#product"+nomor).val(produk);
 	$("#namaproduct"+nomor).val(nama);
@@ -1210,7 +1210,6 @@ function showProductTransfer(nomor, kode, produk, nama, code, harga, berat, kate
 	$("#prodetail"+nomor).html(kategori+' ('+berat+' '+satuan+')');
 	$("#nobcode"+nomor).html(bcode);
 	$("#bcode"+nomor).val(bcode);
-	$("#gudang"+nomor).val(gudang);
 	$("#idpsd"+nomor).val(kode);
 	$("#id_trd"+nomor).val(id_trd);
 	$("#tgl_expired"+nomor).val(tgled);

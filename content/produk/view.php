@@ -40,6 +40,7 @@
                             <th>Faktur</th>
                             <th>Tanggal</th>
                             <th>Batchcode</th>
+							<!-- <th>Gudang</th> -->
                             <th><div align="right">In</div></th>
                             <th><div align="right">Out</div></th>
                         </tr>
@@ -69,6 +70,7 @@
                         	<td><?php echo($hasil['faktur_rpo']); ?></td>
                         	<td><?php echo($hasil['tgl_rpo']); ?></td>
                         	<td><?php echo($hasil['bcode_rpo']); ?></td>
+							<!-- <td><?php echo($hasil['gudang']); ?></td> -->
                         	<td><div align="right"><?php echo($data->angka($in)); ?></div></td>
                         	<td><div align="right"><?php echo($data->angka($out)); ?></div></td>
                         </tr>

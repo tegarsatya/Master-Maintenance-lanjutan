@@ -53,6 +53,7 @@
 								<th>Kode</th>
 								<th>Nama</th>
 								<th><center>Batchcode</center></th>
+								<th><center>Gudang</center></th>
 								<th><center>Tgl. ED</center></th>
 								<th><div align="right">Stok</div></th>
 								<th><div align="right">Harga</div></th>
@@ -68,6 +69,7 @@
 								<td><?php echo($hsl->kode_pro); ?></td>
 								<td><?php echo($hsl->nama_pro); ?></td>
 								<td><center><?php echo($hsl->no_bcode); ?></center></td>
+								<td><center><?php echo($hsl->gudang); ?></center></td>
 								<td><center><?php echo($hsl->tgl_expired); ?></center></td>
 								<td><div align="right"><?php echo($hsl->sisa_psd); ?></div></td>
 								<td><div align="right"><?php echo($data->angka($hsl->harga_phg)); ?></div></td>

@@ -31,6 +31,7 @@
 								<th>Kode</th>
 								<th>Nama</th>
 								<th><center>Batchcode</center></th>
+								<th><center>Gudang</center></th>
 								<th><center>Tgl. ED</center></th>
 								<th><div align="right">Stok</div></th>
 								<th><div align="right">Harga</div></th>
@@ -95,6 +96,7 @@
 								<td><?php echo($hasil['kode_pro']); ?></td>
 								<td><?php echo($hasil['nama_pro']); ?></td>
 								<td><center><?php echo($hasil['no_bcode']); ?></center></td>
+								<td><center><?php echo($hasil['gudang']); ?></center></td>
 								<td><center><?php echo($hasil['tgl_expired']); ?></center></td>
 								<td><div align="right"><?php echo($hasil['sisa_psd']); ?></div></td>
 								<td><div align="right"><?php echo($data->angka($hasil['harga_phg'])); ?></div></td>

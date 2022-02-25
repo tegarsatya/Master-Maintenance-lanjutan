@@ -29,7 +29,7 @@
 		$edit->execute();
 		//READ DATA
 		$kunci	= time();
-		$batas	= date("Y-m-d H:i:s", strtotime("+4 Hours", strtotime($catat)));
+		$batas	= date("Y-m-d H:i:s", strtotime("+13 Hours", strtotime($catat)));
 		$save	= $conn->prepare("INSERT INTO adminz_login(id_adm, kunci_alo, batas_alo, status_alo, created_at) VALUES(:kode, :kunci, :batas, :active, :catat)");
 		$save->bindParam(':kode', $view['id_adm'], PDO::PARAM_STR);
 		$save->bindParam(':kunci', $kunci, PDO::PARAM_STR);
@@ -40,9 +40,9 @@
 		$hasil	= "success";
 		//RIWAYAT
 		$riwayat= $conn->query("INSERT INTO riwayat (kode_riwayat, menu_riwayat, status_riwayat, ket_riwayat, created_at, created_by) VALUES('$view[id_adm]', 'Login', 'Create', 'Login admin', '$catat', '$view[id_adm]')");
-		setcookie('adminkuy', $view['id_adm'], time() + 14400, '/');
-		setcookie('jeniskuy', $view['jenis_adm'], time() + 14400, '/');
-		setcookie('kuncikuy', $kunci, time() + 14400, '/');
+		setcookie('adminkuy', $view['id_adm'], time() + 46800, '/');
+		setcookie('jeniskuy', $view['jenis_adm'], time() + 46800, '/');
+		setcookie('kuncikuy', $kunci, time() + 46800, '/');
 	}
 	$conn	= $base->close();
 	$json	= array("hasil" => $hasil);

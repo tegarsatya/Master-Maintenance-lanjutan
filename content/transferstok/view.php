@@ -113,7 +113,7 @@
                             <th>Product</th>
                             <th>Detail</th>
                             <th>Batchcode</th>
-							<th>Gudang</th>
+							<!-- <th>Gudang</th> -->
 							<th>Expired Date</th>
                             <th>Jumlah <?=($view['tipe_ttr'] == 'IN') ? 'Masuk' : 'Keluar'?></th>
                             <th>Satuan Qty.</th>
@@ -156,7 +156,7 @@
                         	<td><?php echo("(".$hasil['kode_pro'].") ".$hasil['nama_pro']); ?></td>
                         	<td><?php echo($proddetail); ?></td>
                         	<td><?php echo($hasil['no_bcode']); ?></td>
-							<td><?php echo($hasil['gudang']); ?></td>
+							<!-- <td><?php echo($hasil['gudang']); ?></td> -->
 							<td><?php echo($hasil['tgl_expired']); ?></td>
                         	<td><?php echo($hasil['jumlah_ttd']); ?></td>
 							<td><?php echo($hasil['nama_kpr']); ?></td>
