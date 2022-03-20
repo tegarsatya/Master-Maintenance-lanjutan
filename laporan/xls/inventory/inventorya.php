@@ -31,7 +31,7 @@
     <body>
 		<table>
         	<tr>
-            	<th colspan="10">INVENTORY</th>
+            	<th colspan="10">INVENTORY ANALISIS</th>
             </tr>
             <tr>
             	<td colspan="10"></td>

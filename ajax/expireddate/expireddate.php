@@ -15,11 +15,12 @@
 		$tabel	= '<h6 class="text text-danger"><i>Tidak Ada Expired Date</i></h6>';	
 	} else {
 		$no		= 1;
-		$tabel	= '<h6>Expired Date</h6><table class="table table-bordered"><thead><tr><th><center>No.</center></th><th>Produk</th><th>Sediaan</th><th>Batchcode</th><th>Tgl. Expired</th><th><div align="right">Stok</div></th><th>Satuan Qty.</th></tr></thead>';
+		$tabel	= '<h6>Expired Date</h6><table class="table table-bordered"><thead><tr><th><center>No.</center></th><th>Produk</th><th>Sediaan</th><th>Batchcode</th><th>Tgl. Expired</th><th>Gudang</th><th><div align="right">Stok</div></th><th>Satuan Qty.</th></tr></thead>';
 		$qMaster = "SELECT
 						A.no_bcode,
 						A.tgl_expired,
 						A.sisa_psd,
+						A.gudang,
 						B.nama_pro,
 						B.berat_pro,
 						C.nama_kpr,
@@ -42,7 +43,7 @@
 		$master->bindParam(':limit', $limit, PDO::PARAM_INT);
 		$master->execute();
 		while($hasil	= $master->fetch(PDO::FETCH_ASSOC)){
-				$tabel	.= '<tr><td><center>'.$no.'</td></center><td>'.$hasil['nama_pro'].'</td><td>'.$hasil['nama_kpr'].' ('.$hasil['berat_pro'].' '.$hasil['nama_spr'].')</td><td>'.$hasil['no_bcode'].'</td><td>'.$hasil['tgl_expired'].'</td><td><div align="right">'.$data->angka($hasil['sisa_psd']).'</div></td><td>'.$hasil['satuan_kpr'].'</td></tr>';
+				$tabel	.= '<tr><td><center>'.$no.'</td></center><td>'.$hasil['nama_pro'].'</td><td>'.$hasil['nama_kpr'].' ('.$hasil['berat_pro'].' '.$hasil['nama_spr'].')</td><td>'.$hasil['no_bcode'].'</td><td>'.$hasil['tgl_expired'].'</td><td>'.$hasil['gudang'].'</td><td><div align="right">'.$data->angka($hasil['sisa_psd']).'</div></td><td>'.$hasil['satuan_kpr'].'</td></tr>';
 		$no++;
 		}
 		$tabel	.= '</table>';

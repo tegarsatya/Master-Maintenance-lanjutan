@@ -188,6 +188,7 @@
 				</body>
 			</html>
 			<p>Terimakasih anda telah melakukan transaksi bersama Mhubi, terus lakukan transaksi dan dapatkan diskon-diskon menarik dari kami.</p>
+			<p>Baca Petunjuk Cara Penggunaan Input Data Faktur dan Report Faktur - keterangan Report Faktur Akan Segera Dilakukan Update data - Opps Gagal - Internet Lambat</p>
 			";
 			$mail->AltBody		= "Transaksi";
 			if($mail->Send()){

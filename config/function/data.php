@@ -418,5 +418,11 @@
 			return $data;
 		}
 		// end
+
+		// function timing_api($id_timing == TRUE)
+		// {
+		// 	$id_timing = is_true($id_timing) || "id_timing != ''" : "id_timing = '$id_timing'";
+
+		// }
 	}
 ?>

@@ -50,6 +50,7 @@
 		function cekhashpass($kode, $password){
 			$hasil	= password_verify($kode, $password) ? true : false;
 			return $hasil;
+
 		}
 		
 		function validadmin($kode, $kunci){
