@@ -125,7 +125,7 @@
                 </tr>
 			<?php
             	}
-				$ppn	= ($stotal * 10) / 100;
+				$ppn	= ($stotal * 11) / 100;
 				$gtotal	= round(($stotal + $ppn), 0);
 			?>
             </tbody>
@@ -185,7 +185,7 @@
                         <td><div align="right"><span style="float:left;">Rp.</span><?php echo($data->angka(0)); ?></div></td>
                     </tr>
                     <tr>
-                        <td><div align="left">PPN <span style="float:right;">10%</span></div></td>
+                        <td><div align="left">PPN <span style="float:right;">11%</span></div></td>
                         <td></td>
                         <td><div align="right"><span style="float:left;">Rp.</span><?php echo($data->angka($ppn)); ?></div></td>
                     </tr>

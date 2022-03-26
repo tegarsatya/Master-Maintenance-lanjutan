@@ -61,10 +61,11 @@ function bersih(nilai){
 
 $("#harga").change(function(){
 	var	harga	= bersih($("#harga").val());
-	var ppn		= (parseInt(harga) * 1);
+	var ppn		= (parseInt(harga) * 11) / 100;
 	var total	= parseInt(harga) + parseInt(ppn);
 	$("#hargappn").val(titik(total));
 });
+
 
 function caritagihan(){
 	var kode	= $("#kodeorder").val();
@@ -575,7 +576,7 @@ function delsales(nomor){
 	var total	= $("#ptotal"+nomor).val();
 	var pstotal	= $("#pstotal").val();
 	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
-	var ppn		= (stotal * 10) / 100;
+	var ppn		= (stotal * 11) / 100;
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(parseInt(jumlah)<=1){
 		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
@@ -743,7 +744,7 @@ function getproduct(nomor, id, nama, code, harga, berat, kategori, satuan){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11)/ 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#detailproduct"+nomor).html(kategori+' ('+berat+' '+satuan+')');
@@ -776,7 +777,7 @@ function getproductsales(nomor, kode, produk, nama, code, harga, berat, kategori
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#satuanqty"+nomor).html(satuanqty);
@@ -821,7 +822,7 @@ function jumlahorder(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#pdiskon"+nomor).val(diskon);
 	$("#pjumlah"+nomor).val(titik(jumlah));
@@ -848,7 +849,7 @@ function hitungorder(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#pjumlah"+nomor).val(titik(jumlah));
 	$("#pharga"+nomor).val(titik(harga));
@@ -878,7 +879,7 @@ function hitungsales(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(pjumlah==0 || pjumlah==''){
 		swal("Error", "Jumlah order tidak boleh kosong...", "error");
@@ -922,7 +923,7 @@ function jumlahsales(nomor){
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(outlet==''){
 		swal("Error", "Pilih outlet dulu...", "error");
@@ -970,7 +971,7 @@ function addrorder(nomor, kode){
 			//$("#data"+menu).append(data);
 			var total	= parseInt(jumlah) + 1;
 			var stotal	= parseInt(pstotal) + parseInt(json.total);
-			var ppn		= (stotal * 10) / 100;
+			var ppn		= (stotal * 11) / 100;
 			var gtotal	= parseInt(stotal) + parseInt(ppn);
 			$("#jumaddorder").val(total);
 			$("#pstotal").val(titik(stotal));
@@ -1450,7 +1451,7 @@ function getproductsalesd(nomor, kode, produk, nama, code, harga, berat, kategor
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#satuanqty"+nomor).html(satuanqty);
@@ -1494,7 +1495,7 @@ function hitungsalesd(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(pjumlah==0 || pjumlah==''){
 		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
@@ -1538,7 +1539,7 @@ function jumlahsalesd(nomor){
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(outlet==''){
 		swal("Error", "Pilih outlet dulu...", "error");
@@ -1714,7 +1715,7 @@ function getproductsalesp(nomor, kode, produk, nama, code, harga, berat, kategor
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#satuanqty"+nomor).html(satuanqty);
@@ -1758,7 +1759,7 @@ function hitungsalesp(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(pjumlah==0 || pjumlah==''){
 		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
@@ -1802,7 +1803,7 @@ function jumlahsalesp(nomor){
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(outlet==''){
 		swal("Error", "Pilih outlet dulu...", "error");
@@ -1904,7 +1905,7 @@ function delsalesp(nomor){
 	var total	= $("#ptotal"+nomor).val();
 	var pstotal	= $("#pstotal").val();
 	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
-	var ppn		= (stotal * 10) / 100;
+	var ppn		= (stotal * 11) / 100;
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(parseInt(jumlah)<=1){
 		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
@@ -1978,7 +1979,7 @@ function getproductsalesr(nomor, kode, produk, nama, code, harga, berat, kategor
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#satuanqty"+nomor).html(satuanqty);
@@ -2022,7 +2023,7 @@ function hitungsalesr(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(pjumlah==0 || pjumlah==''){
 		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
@@ -2066,7 +2067,7 @@ function jumlahsalesr(nomor){
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(outlet==''){
 		swal("Error", "Pilih outlet dulu...", "error");
@@ -2240,7 +2241,7 @@ function getproductsalesl(nomor, kode, produk, nama, code, harga, berat, kategor
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#noproduct"+nomor).html('('+code+') '+nama);
 	$("#satuanqty"+nomor).html(satuanqty);
@@ -2284,7 +2285,7 @@ function hitungsalesl(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(pjumlah==0 || pjumlah==''){
 		swal("Error", "Jumlah Donasi tidak boleh kosong...", "error");
@@ -2328,7 +2329,7 @@ function jumlahsalesl(nomor){
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	//var total	= parseInt(subtot) - ((subtot * diskon) / 100);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(outlet==''){
 		swal("Error", "Pilih outlet dulu...", "error");
@@ -2430,7 +2431,7 @@ function delsalesl(nomor){
 	var total	= $("#ptotal"+nomor).val();
 	var pstotal	= $("#pstotal").val();
 	var stotal	= parseInt(bersih(pstotal)) - parseInt(bersih(total));
-	var ppn		= (stotal * 10) / 100;
+	var ppn		= (stotal * 11) / 100;
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	if(parseInt(jumlah)<=1){
 		swal("Maaf!", "Tidak boleh dikosongkan...", "error");
@@ -2520,7 +2521,7 @@ function addrorderr(nomor, kode){
 			//$("#data"+menu).append(data);
 			var total	= parseInt(jumlah) + 1;
 			var stotal	= parseInt(pstotal) + parseInt(json.total);
-			var ppn		= (stotal * 10) / 100;
+			var ppn		= (stotal * 11) / 100;
 			var gtotal	= parseInt(stotal) + parseInt(ppn);
 			$("#jumaddorderr").val(total);
 			$("#pstotal").val(titik(stotal));
@@ -2550,7 +2551,7 @@ function jumlahorderr(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#pdiskon"+nomor).val(diskon);
 	$("#pjumlah"+nomor).val(titik(jumlah));
@@ -2577,7 +2578,7 @@ function hitungorderr(nomor){
 	var subtot	= (jumlah * harga);
 	var total	= Math.round((parseInt(subtot) - ((subtot * diskon) / 100)), 0);
 	var stotal	= parseInt(total) + parseInt(pstotal) - parseInt(ptotal);
-	var ppn		= Math.round(((stotal * 10) / 100), 0);
+	var ppn		= Math.round(((stotal * 11) / 100), 0);
 	var gtotal	= parseInt(stotal) + parseInt(ppn);
 	$("#pjumlah"+nomor).val(titik(jumlah));
 	$("#pharga"+nomor).val(titik(harga));

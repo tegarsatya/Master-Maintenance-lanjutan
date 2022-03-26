@@ -55,6 +55,7 @@
                     <th>Faktur</th>
                     <th>Tanggal</th>
                     <th>Batchcode</th>
+                    <th>Gudang</th>
                     <th><div align="right">In</div></th>
                     <th><div align="right">Out</div></th>
                 </tr>
@@ -67,7 +68,7 @@
                 $tout	= 0;
                 $no		= 1;
                 $proses	= $conn->query("CALL reportproduk('$kode')");
-                $master	= $conn->prepare("SELECT jenis_rpo, bcode_rpo, mitra_rpo, kode_rpo, faktur_rpo, tgl_rpo, jumlah_rpo FROM report_produk WHERE id_pro=:kode ORDER BY tgl_rpo ASC");
+                $master	= $conn->prepare("SELECT jenis_rpo, bcode_rpo, mitra_rpo, kode_rpo, gudang, faktur_rpo, tgl_rpo, jumlah_rpo FROM report_produk WHERE id_pro=:kode ORDER BY tgl_rpo ASC");
                 $master->bindParam(':kode', $kode, PDO::PARAM_STR);
                 $master->execute();
                 while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
@@ -84,6 +85,7 @@
                     <td><?php echo($hasil['faktur_rpo']); ?></td>
                     <td><?php echo($hasil['tgl_rpo']); ?></td>
                     <td><?php echo($hasil['bcode_rpo']); ?></td>
+                    <td><?php echo($hasil['gudang']); ?></td>
                     <td><div align="right"><?php echo($data->angka($in)); ?></div></td>
                     <td><div align="right"><?php echo($data->angka($out)); ?></div></td>
                 </tr>

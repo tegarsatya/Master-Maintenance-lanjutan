@@ -50,7 +50,7 @@
 				</tr><script type="text/javascript">$(".fortgl").mask("9999-99-99");</script>';
 	$nomor++;
 	}
-	$ppn	= ($total * 10) / 100;
+	$ppn	= ($total * 11) / 100;
 	$gtotal	= $total + $ppn;
 	$footer	= 
 	'<tr>
@@ -68,7 +68,7 @@
 				</tr>
 				<tr>
 				<td></td>
-					<td colspan="8"><div align="right"><b>PPN (10%)</b></div></td>
+					<td colspan="8"><div align="right"><b>PPN (11%)</b></div></td>
 					<td><input type="text" name="pppn" id="pppn" class="inputtotal" onkeyup="angka(this)" value="'.$data->angka($ppn).'" placeholder="0" readonly="readonly" /></td><td></td>
 				</tr>
 				<tr>

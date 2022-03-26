@@ -67,7 +67,7 @@
                         </tr>
                     	<tr>
                             <td></td>
-                        	<td colspan="8"><div align="right"><b><span id="taxLabel">PPN (10%)</span></b></div></td>
+                        	<td colspan="8"><div align="right"><b><span id="taxLabel">PPN (11%)</span></b></div></td>
                             <td><input type="text" name="pppn" id="pppn" class="inputtotal" onkeyup="angka(this)" placeholder="0"  /></td>
                         	<td></td>
                         </tr>

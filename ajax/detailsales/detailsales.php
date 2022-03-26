@@ -56,7 +56,7 @@
 				<td><input type="text" name="pstotal" id="pstotal" class="inputtotal" onkeyup="angka(this)" value="'.$data->angka($view['subtot_tsl']).'" placeholder="0" readonly="readonly" /></td>
 			</tr>
 			<tr>
-				<td colspan="8"><div align="right"><b>PPN (10%)</b></div></td>
+				<td colspan="8"><div align="right"><b>PPN (11%)</b></div></td>
 				<td><input type="text" name="pppn" id="pppn" class="inputtotal" onkeyup="angka(this)" value="'.$data->angka($view['ppn_tsl']).'" placeholder="0" readonly="readonly" /></td>
 			</tr>
 			<tr>

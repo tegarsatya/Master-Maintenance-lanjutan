@@ -76,7 +76,7 @@
                         	<td><div align="right"><?php echo($data->angka($view['subtot_tsl'])); ?></div></td>
                         </tr>
                     	<tr>
-                        	<td colspan="6"><div align="right"><b>PPN (10%)</b></div></td>
+                        	<td colspan="6"><div align="right"><b>PPN (11%)</b></div></td>
                         	<td><div align="right"><?php echo($data->angka($view['ppn_tsl'])); ?></div></td>
                         </tr>
                     	<tr>

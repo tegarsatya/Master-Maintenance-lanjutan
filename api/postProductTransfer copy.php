@@ -147,7 +147,7 @@
                                 SET
                                     $set,
                                     updated_at = '$now',
-                                    updated_by = 'System'
+                                    updated_by = 'System',
                                 WHERE
                                     id_psd = '$idpsd'";
                     try {

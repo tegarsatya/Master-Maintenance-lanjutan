@@ -50,7 +50,7 @@
             <tbody>
 			<?php
 				$nomor	= 1;
-				$master	= $conn->prepare("SELECT A.no_bcode, A.tgl_expired,A.gudang, A.tgl_psd, A.sisa_psd,B.kategori_obat,B.kode_produk_jadi, B.nama_pro, B.berat_pro,B.minstok_pro, C.harga_phg, C.hargap_phg, D.nama_kpr, E.nama_spr FROM produk_stokdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr WHERE A.sisa_psd>0 AND B.nama_pro LIKE '%$search%' AND C.status_phg=:active ORDER BY B.nama_pro ASC");
+				$master	= $conn->prepare("SELECT A.jumlah, B.kategori_obat,B.kode_produk_jadi, B.nama_pro, B.berat_pro,B.minstok_pro, C.harga_phg, C.hargap_phg, D.nama_kpr, E.nama_spr FROM(SELECT id_pro, SUM(sisa_psd) AS jumlah FROM produk_stokdetail GROUP BY id_pro) AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr WHERE A.sisa_psd>0 AND B.nama_pro LIKE '%$search%' AND C.status_phg=:active ORDER BY B.nama_pro ASC");
 				$master->bindParam(':active', $active, PDO::PARAM_STR);
 				$master->execute();
 				while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
