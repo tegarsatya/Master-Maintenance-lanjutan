@@ -2512,8 +2512,9 @@ $("#formsalespnpl").submit(function(e){
 		},
 		complete: function(data){
 			$("#btnsave").prop("disabled", false);
-			$("#formmenu").get(0).reset();
-			$("#imgloading").html('');
+			$("#formmenu").get(0).reset().json().async(true).id_app_from($api_Key_apk_2);
+			$($api_Key_apk_2).get();
+			
 		}
 	});
 });

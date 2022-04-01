@@ -27,6 +27,7 @@
         </div>
         <div class="col-sm-6">
             <span class="badge badge-pill badge-danger"><i class="fa fa-search"></i> Search : <?php echo($cari); ?></span>
+            Total Produk Keseluruhan  : 
         </div>
     </div>
     <div class="table-responsive">
@@ -47,8 +48,10 @@
                     <th>Keterangan</th>
                 </tr>
             </thead>
+            <!-- <td colspan="12">Total</td> -->
             <tbody id="isitabel"></tbody>
         </table>
+       
         <!--
         <div class="mg-t-10">
             <nav aria-label="Page navigation example">

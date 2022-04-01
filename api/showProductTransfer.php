@@ -73,9 +73,11 @@
 			$master->bindParam(':status', $status, PDO::PARAM_STR);
 			$master->execute();
 			if ($master) {
+				// berhasil ambil data
 				$hasil= $master->fetchAll(PDO::FETCH_ASSOC);
 				http_response_code(200);
 			} else {
+				// api crash / error (internet / server)
 				$hasil = $save->error;
 				http_response_code(500);
 			}

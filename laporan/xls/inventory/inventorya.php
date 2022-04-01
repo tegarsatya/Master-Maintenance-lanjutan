@@ -44,17 +44,25 @@
                     <th>NAMA PRODUK</th>
                     <th><div align="right">HARGA</div></th>
                     <th><div align="right">KUANTITAS</div></th>
+					<th><div align="right">Total</div></th>
                     <th>KETERANGAN</th>
 				</tr>
     		</thead>
             <tbody>
 			<?php
 				$nomor	= 1;
-				$master	= $conn->prepare("SELECT A.jumlah, B.kategori_obat,B.kode_produk_jadi, B.nama_pro, B.berat_pro,B.minstok_pro, C.harga_phg, C.hargap_phg, D.nama_kpr, E.nama_spr FROM(SELECT id_pro, SUM(sisa_psd) AS jumlah FROM produk_stokdetail GROUP BY id_pro) AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr WHERE A.sisa_psd>0 AND B.nama_pro LIKE '%$search%' AND C.status_phg=:active ORDER BY B.nama_pro ASC");
+				$jumlah	= 0;
+				$subtot	= 0;
+				$stotal	= 0;
+				$master	= $conn->prepare("SELECT A.no_bcode, A.tgl_expired,A.gudang, A.tgl_psd, A.sisa_psd,B.kategori_obat,B.kode_produk_jadi, B.nama_pro, B.berat_pro,B.minstok_pro, C.harga_phg, C.hargap_phg, D.nama_kpr, E.nama_spr FROM produk_stokdetail AS A LEFT JOIN produk AS B ON A.id_pro=B.id_pro LEFT JOIN produk_harga AS C ON B.id_pro=C.id_pro LEFT JOIN kategori_produk AS D ON B.id_kpr=D.id_kpr LEFT JOIN satuan_produk AS E ON B.id_spr=E.id_spr WHERE A.sisa_psd>0 AND B.nama_pro LIKE '%$search%' AND C.status_phg=:active ORDER BY B.nama_pro ASC");
 				$master->bindParam(':active', $active, PDO::PARAM_STR);
 				$master->execute();
 				while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
 					$status	= empty($hasil['sisa_psd']) ? 'Kosong' : (($hasil['sisa_psd']<50) ? 'Order Ulang' : 'Cukup');
+					$subtot	= $hasil['harga_phg'] * $hasil['sisa_psd'];
+					// $diskon	= ($subtot * $hasil['diskon_tfd']) / 100;
+					$jumlah	+= $subtot;
+					// $total += $row['total'];
 			?>
                 <tr>
                     <td><center><?php echo($nomor); ?></center></td>
@@ -62,7 +70,15 @@
                     <td><div align="right"><?php echo($hasil['harga_phg']); ?></div></td>
                     <td><div align="right"><?php echo($hasil['sisa_psd']); ?></div></td>
                     <td><?php echo($status); ?></td>
+					<td><?php echo($subtot);?></td>
                 </tr>
+				
+				<tr>
+					
+					<td colspan="2">TOTAL</td>
+					<td><?php echo($jumlah);?></td>					
+
+				</tr>
 			<?php
 				$nomor++;
             	}

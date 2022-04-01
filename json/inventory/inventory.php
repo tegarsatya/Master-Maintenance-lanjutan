@@ -32,15 +32,44 @@
 		$master->bindParam(':active', $active, PDO::PARAM_STR);
 		$master->execute();
 		while($hasil= $master->fetch(PDO::FETCH_ASSOC)){
+			$jumlah	= 0;
+			$subtot	= 0;
 			$no++;
 			$awal  = date_create($hasil['tgl_psd']);
 			$akhir = date_create();
 			$diff  = date_diff( $awal, $akhir );
+			$subtot	= $hasil['harga_phg'] * $hasil['sisa_psd'];
+			// $stotal	+= $subtot;
+			$jumlah	+= round(($subtot), 0);
 			$status	= empty($hasil['sisa_psd']) ? 'Kosong' : (($hasil['sisa_psd']<50) ? 'Order Ulang' : 'Cukup');
 			$nama	= '<a href="#modal1" onclick="crud(\'inventory\', \'update\', \''.$hasil['id_psd'].'\')" data-toggle="modal">'.$hasil['nama_pro'].'</a>';
-			$tabel	.= '<tr><td><center>'.$no.'</center></td><td>'.$nama.'</td><td>'.$hasil['gudang'].'</td><td>'.$hasil['berat_pro'].' '.$hasil['nama_spr'].'</td><td>'.$hasil['no_bcode'].'</td><td>'.$hasil['tgl_expired'].'</td><td><div align="right"><center>'.$diff->days. " Hari ".'</center></div></td><td><div align="right">'.$data->angka($hasil['harga_phg']).'</div></td><td><div align="right">'.$data->angka($hasil['hargap_phg']).'</div></td><td><div align="right">'.$data->angka($hasil['sisa_psd']).'</div></td><td><center>'.$hasil['minstok_pro'].'</center></td><td>'.$status.'</td></tr>';
-		}
-		$navi	= '';
+			$tabel	.= '<tr>
+							<td><center>'.$no.'</center></td>
+							<td>'.$nama.'</td>
+							<td>'.$hasil['gudang'].'</td>
+							<td>'.$hasil['berat_pro'].' '.$hasil['nama_spr'].'</td>
+							<td>'.$hasil['no_bcode'].'</td>
+							<td>'.$hasil['tgl_expired'].'</td>
+							<td><div align="right"><center>'.$diff->days. " Hari ".'</center></div></td>
+							<td><div align="right">'.$data->angka($hasil['harga_phg']).'</div></td>
+							<td><div align="right">'.$data->angka($hasil['hargap_phg']).'</div></td>
+							<td><div align="right">'.$data->angka($hasil['sisa_psd']).'</div></td>
+							<td><center>'.$hasil['minstok_pro'].'</center></td>
+							<td>'.$status.'</td>
+							<td>'.$subtot.'</td>
+							</tr>';
+						
+							
+							// $gtotal = round(($stotal), 0);
+						}
+			$navi	= '';
+			
+			$tabel	.=  '<tr>
+							<td colspan="12">TOTAL :</td>
+							<td>' .$data->angka($jumlah).' </td>
+						</tr>';
+		
+		
 	}
 	$conn	= $base->close();
 	$json	= array("tabel" => $tabel, "halaman" => $page, "paginasi" => $navi);
